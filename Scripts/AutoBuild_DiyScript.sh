@@ -92,11 +92,11 @@ EOF
 		# sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase="/luci-static/argon-mod"' $(PKG_Finder d package default-settings)/files/zzz-default-settings
 
 		rm -r ${FEEDS_LUCI}/luci-theme-argon*
-		AddPackage themes jerrykuku luci-theme-argon  18.06
-		AddPackage other vernesong OpenClash  dev
-		AddPackage other jerrykuku luci-app-argon-config  master
-		AddPackage other fw876 helloworld  main
-		AddPackage themes thinktip luci-theme-neobird  main
+		AddPackage themes jerrykuku luci-theme-argon 18.06
+		AddPackage other vernesong OpenClash dev
+		AddPackage other jerrykuku luci-app-argon-config master
+		AddPackage other fw876 helloworld main
+		AddPackage themes thinktip luci-theme-neobird main
 		
 		case "${TARGET_BOARD}" in
 		ramips)
@@ -128,8 +128,8 @@ EOF
 			#rm -rf packages/lean/autocore
 			#AddPackage lean Hyy2001X autocore-modify master
 
-			singbox_version="1.8.1"
-			hysteria_version="2.2.3"
+			singbox_version="1.8.4"
+			hysteria_version="2.2.4"
 			naiveproxy_version="119.0.6045.66-1"
 
 			wget --quiet --no-check-certificate -P /tmp \
@@ -162,13 +162,17 @@ EOF
 		case "${TARGET_PROFILE}" in
 		x86_64)
 			Copy ${CustomFiles}/Depends/cpuset ${BASE_FILES}/bin
-			sed -i "s?/bin/login?/usr/libexec/login.sh?g" ${FEEDS_PKG}/ttyd/files/ttyd.config
+			# sed -i "s?/bin/login?/usr/libexec/login.sh?g" ${FEEDS_PKG}/ttyd/files/ttyd.config
 			sed -i -- 's:/bin/ash:'/bin/bash':g' ${BASE_FILES}/etc/passwd
 			AddPackage passwall2-luci xiaorouji openwrt-passwall2 main
 			AddPackage other fw876 helloworld main
 			rm -r ${WORK}/package/other/helloworld/mosdns
 			rm -r ${FEEDS_PKG}/mosdns
 			AddPackage other sbwml luci-app-mosdns v5
+			AddPackage other vernesong OpenClash dev
+			ClashDL amd64 dev
+			ClashDL amd64 tun
+			ClashDL amd64 meta
 		;;
 		esac
 	;;
