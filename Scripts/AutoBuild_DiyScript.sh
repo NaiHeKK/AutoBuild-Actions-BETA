@@ -97,6 +97,8 @@ EOF
 		AddPackage other jerrykuku luci-app-argon-config master
 		AddPackage other fw876 helloworld main
 		AddPackage themes thinktip luci-theme-neobird main
+		rm -r ${FEEDS_PKG}/curl
+		Copy ${CustomFiles}/curl ${FEEDS_PKG}
 		
 		case "${TARGET_BOARD}" in
 		ramips)
@@ -122,32 +124,28 @@ EOF
 			ClashDL amd64 tun
 			ClashDL amd64 meta
 			Copy ${CustomFiles}/Depends/cpuset ${BASE_FILES}/bin
+			rm -r ${WORK}/package/other/helloworld/mosdns
+			rm -r ${FEEDS_PKG}/mosdns
+			rm -r ${FEEDS_LUCI}/luci-app-mosdns
+			AddPackage other sbwml luci-app-mosdns v5
 			AddPackage passwall-depends xiaorouji openwrt-passwall-packages main
 			AddPackage passwall-luci xiaorouji openwrt-passwall main
 			AddPackage passwall2-luci xiaorouji openwrt-passwall2 main
 			#rm -rf packages/lean/autocore
 			#AddPackage lean Hyy2001X autocore-modify master
 
-			singbox_version="1.8.4"
+			singbox_version="1.8.5"
 			hysteria_version="2.2.4"
-			naiveproxy_version="119.0.6045.66-1"
-
 			wget --quiet --no-check-certificate -P /tmp \
 				https://github.com/SagerNet/sing-box/releases/download/v${singbox_version}/sing-box-${singbox_version}-linux-amd64.tar.gz
 			wget --quiet --no-check-certificate -P /tmp \
 				https://github.com/apernet/hysteria/releases/download/app%2Fv${hysteria_version}/hysteria-linux-amd64
-			wget --quiet --no-check-certificate -P /tmp \
-				https://github.com/klzgrad/naiveproxy/releases/download/v${naiveproxy_version}/naiveproxy-v${naiveproxy_version}-openwrt-x86_64.tar.xz
-
+			
 			tar -xvzf /tmp/sing-box-${singbox_version}-linux-amd64.tar.gz -C /tmp
 			Copy /tmp/sing-box-${singbox_version}-linux-amd64/sing-box ${BASE_FILES}/usr/bin
-
 			Copy /tmp/hysteria-linux-amd64 ${BASE_FILES}/usr/bin hysteria
 
-			tar -xvf /tmp/naiveproxy-v${naiveproxy_version}-openwrt-x86_64.tar.xz -C /tmp
-			Copy /tmp/naiveproxy-v${naiveproxy_version}-openwrt-x86_64/naive ${BASE_FILES}/usr/bin
-
-			chmod 777 ${BASE_FILES}/usr/bin/sing-box ${BASE_FILES}/usr/bin/hysteria ${BASE_FILES}/usr/bin/naive
+			chmod 777 ${BASE_FILES}/usr/bin/sing-box ${BASE_FILES}/usr/bin/hysteria
 
 			# ReleaseDL https://api.github.com/repos/Loyalsoldier/v2ray-rules-dat/releases/latest geosite.dat ${BASE_FILES}/usr/v2ray
 			# ReleaseDL https://api.github.com/repos/Loyalsoldier/v2ray-rules-dat/releases/latest geoip.dat ${BASE_FILES}/usr/v2ray
@@ -186,7 +184,8 @@ EOF
 	hanwckf/immortalwrt-mt798x*)
 		case "${TARGET_PROFILE}" in
 		cmcc_rax3000m)
-			:
+			AddPackage passwall-luci xiaorouji openwrt-passwall main
+			rm -r ${FEEDS_LUCI}/luci-app-passwall
 		;;
 		esac
 	;;
