@@ -144,15 +144,15 @@ jobs:
                 echo "CONFIG_FILE=$CONFIG_FILE" >> $GITHUB_ENV
             fi
         fi
-        if [ "$DEFAULT_SOURCE" =~ "lede" ]
+        if [[ "$DEFAULT_SOURCE" =~ "lede" ]]
         then
             echo "Tempoary_FLAG=LEDE" >> $GITHUB_ENV
             echo "LEDE"
-        elif [ "$DEFAULT_SOURCE" =~ "hanwckf" ]
+        elif [[ "$DEFAULT_SOURCE" =~ "hanwckf" ]]
         then
             echo "Tempoary_FLAG=hanwckf" >> $GITHUB_ENV
             echo "hanwckf"
-        elif [ "$DEFAULT_SOURCE" =~ "padavanonly" ]
+        elif [[ "$DEFAULT_SOURCE" =~ "padavanonly" ]]
         then
             echo "Tempoary_FLAG=padavanonly" >> $GITHUB_ENV
             echo "padavanonly"
