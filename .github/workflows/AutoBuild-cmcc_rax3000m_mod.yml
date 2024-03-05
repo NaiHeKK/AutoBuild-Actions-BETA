@@ -179,12 +179,12 @@ jobs:
             then
                 sed -i 's/<0x580000 0x7200000>/<0x580000 0xee00000>/g' target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-nand.dts
                 cat target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-nand.dts
-                sed - i 's/116736k/243712k/g' target/linux/mediatek/image/filogic.mk
+                sed -i 's/116736k/243712k/g' target/linux/mediatek/image/filogic.mk
                 cat target/linux/mediatek/image/filogic.mk
             else
                 sed -i 's/<0x580000 0x7200000>/<0x580000 0xee00000>/g' target/linux/mediatek/files-5.4/arch/arm64/boot/dts/mediatek/mt7981-cmcc-rax3000m.dts
                 cat target/linux/mediatek/files-5.4/arch/arm64/boot/dts/mediatek/mt7981-cmcc-rax3000m.dts
-                sed - i 's/116736k/243712k/g' target/linux/mediatek/image/mt7981.mk
+                sed -i 's/116736k/243712k/g' target/linux/mediatek/image/mt7981.mk
                 cat target/linux/mediatek/image/mt7981.mk
             fi
         fi
