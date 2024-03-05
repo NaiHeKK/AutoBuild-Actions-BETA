@@ -128,7 +128,6 @@ jobs:
         if [ -n "${{ github.event.inputs.Tempoary_SOURCE }}" ]
         then
             echo "SOURCE: [${{ github.event.inputs.Tempoary_SOURCE }}]"
-            DEFAULT_SOURCE = ${{ github.event.inputs.Tempoary_SOURCE }}
             echo "DEFAULT_SOURCE=${{ github.event.inputs.Tempoary_SOURCE }}" >> $GITHUB_ENV
             echo "DEFAULT_SOURCE: ${{ env.DEFAULT_SOURCE }}"
         fi
