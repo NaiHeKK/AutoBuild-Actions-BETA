@@ -144,7 +144,6 @@ jobs:
                 echo "CONFIG_FILE=$CONFIG_FILE" >> $GITHUB_ENV
             fi
         if
-
         if [ "$DEFAULT_SOURCE" =~ "lede" ]
         then
             echo "Tempoary_FLAG=LEDE" >> $GITHUB_ENV
