@@ -127,11 +127,13 @@ jobs:
         fi
         if [ -n "${{ github.event.inputs.Tempoary_SOURCE }}" ]
         then
-            echo "DEFAULT_SOURCE=${{ github.event.inputs.Tempoary_SOURCE }}" >> $GITHUB_ENV
+            DEFAULT_SOURCE=${{ github.event.inputs.Tempoary_SOURCE }}
+            echo "DEFAULT_SOURCE=$DEFAULT_SOURCE" >> $GITHUB_ENV
             echo "SOURCE: [${{ github.event.inputs.Tempoary_SOURCE }}]"
+            echo "DEFAULT_SOURCE: $DEFAULT_SOURCE"
         fi
-        REPO_URL="https://github.com/$(cut -d \: -f 1 <<< ${{ github.event.inputs.Tempoary_SOURCE }})"
-        REPO_BRANCH=$(cut -d \: -f 2 <<< ${{ github.event.inputs.Tempoary_SOURCE }})
+        REPO_URL="https://github.com/$(cut -d \: -f 1 <<< $DEFAULT_SOURCE)"
+        REPO_BRANCH=$(cut -d \: -f 2 <<< $DEFAULT_SOURCE)
         echo "REPO_URL=$REPO_URL" >> $GITHUB_ENV
         echo "REPO_BRANCH=$REPO_BRANCH" >> $GITHUB_ENV
         echo "Compile_Date=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
