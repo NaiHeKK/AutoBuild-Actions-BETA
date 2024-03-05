@@ -50,7 +50,7 @@ env:
 # 编译时调用的 [.config] 文件名称
   CONFIG_FILE: cmcc_rax3000m
 # 源码仓库:分支
-  DEFAULT_SOURCE: hanwckf/immortalwrt-mt798x:openwrt-21.02
+# DEFAULT_SOURCE: hanwckf/immortalwrt-mt798x:openwrt-21.02
 # 上传固件到 Github Releases
   UPLOAD_RELEASES: true
 # 上传固件到 Github Artifacts
@@ -127,8 +127,7 @@ jobs:
         fi
         if [ -n "${{ github.event.inputs.Tempoary_SOURCE }}" ]
         then
-            DEFAULT_SOURCE=${{ github.event.inputs.Tempoary_SOURCE }}
-            echo "DEFAULT_SOURCE=$DEFAULT_SOURCE" >> $GITHUB_ENV
+            echo "DEFAULT_SOURCE=${{ github.event.inputs.Tempoary_SOURCE }}" >> $GITHUB_ENV
             echo "SOURCE: [${{ github.event.inputs.Tempoary_SOURCE }}]"
             echo "DEFAULT_SOURCE: ${{ env.DEFAULT_SOURCE }}"
         fi
