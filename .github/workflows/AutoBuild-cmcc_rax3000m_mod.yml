@@ -135,7 +135,14 @@ jobs:
         if [ "$DEFAULT_SOURCE" == "coolsnowwolf/lede:master" ]
         then
             CONFIG_FILE=${{ env.CONFIG_FILE }}_LEDE
-            echo "CONFIG_FILE=$CONFIG_FILE" >> $GITHUB_ENV
+            if [ ! -f "$GITHUB_WORKSPACE/Configs/$CONFIG_FILE" ]
+            then
+                echo "CONFIG_FILE: [/Config/$CONFIG_FILE] is not detected ..."
+                exit 1
+            else
+                echo "CONFIG_FILE: [/Config/$CONFIG_FILE]"
+                echo "CONFIG_FILE=$CONFIG_FILE" >> $GITHUB_ENV
+            fi
         fi
         REPO_URL="https://github.com/$(cut -d \: -f 1 <<< $DEFAULT_SOURCE)"
         REPO_BRANCH=$(cut -d \: -f 2 <<< $DEFAULT_SOURCE)
