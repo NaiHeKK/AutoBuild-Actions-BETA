@@ -129,7 +129,7 @@ jobs:
         then
             echo "SOURCE: [${{ github.event.inputs.Tempoary_SOURCE }}]"
             DEFAULT_SOURCE = ${{ github.event.inputs.Tempoary_SOURCE }}
-            echo "DEFAULT_SOURCE=$DEFAULT_SOURCE" >> $GITHUB_ENV
+            echo "DEFAULT_SOURCE=${{ github.event.inputs.Tempoary_SOURCE }}" >> $GITHUB_ENV
             echo "DEFAULT_SOURCE: ${{ env.DEFAULT_SOURCE }}"
         fi
         REPO_URL="https://github.com/$(cut -d \: -f 1 <<< ${{ env.DEFAULT_SOURCE }})"
