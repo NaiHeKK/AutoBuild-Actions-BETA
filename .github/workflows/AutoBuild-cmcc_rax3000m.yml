@@ -146,8 +146,6 @@ jobs:
         git clone -b $REPO_BRANCH $REPO_URL openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
         cd openwrt
-        sed -i 's/<0x580000 0x7200000>/<0x580000 0xee00000>/g' target/linux/mediatek/files-5.4/arch/arm64/boot/dts/mediatek/mt7981-cmcc-rax3000m.dts
-        sed -i 's/116736k/243712k/g' target/linux/mediatek/image/mt7981.mk
         ./scripts/feeds update -a
         ./scripts/feeds install -a
 
