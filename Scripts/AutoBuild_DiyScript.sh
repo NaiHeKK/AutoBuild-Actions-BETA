@@ -212,5 +212,5 @@ EOF
 		;;
 		esac
 	;;
-git checkout master	esac
+	esac
 }
