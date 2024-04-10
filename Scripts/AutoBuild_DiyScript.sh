@@ -136,7 +136,7 @@ EOF
 			rm -r ${WORK}/package/passwall/openwrt-passwall-packages/xray-core
 		;;
 		x86_64)
-			sed -i "s?6.1?5.15?g" ${WORK}/target/linux/x86/Makefile
+			sed -i "s?6.1?6.6?g" ${WORK}/target/linux/x86/Makefile
 			ClashDL amd64 dev
 			ClashDL amd64 tun
 			ClashDL amd64 meta
