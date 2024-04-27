@@ -4,7 +4,7 @@
 #   Author: Hyy2001X                                      #
 ###########################################################
 
-name: x86_64 WiFi
+name: x86_64 Next
 
 on:
   repository_dispatch:
@@ -26,17 +26,17 @@ on:
     inputs:
       Tempoary_CONFIG:
         description: '配置文件'
-        default: 'x86_64-AP'
+        default: 'x86_64-NextAP'
         type: choice
         options:
-          - 'x86_64-AP'
+          - 'x86_64-NextAP'
       Tempoary_FLAG:
         description: '固件标签'
         default: 'AUTO'
         type: choice
         options:
           - 'AUTO'
-          - 'AP'
+          - 'NextAP'
       Tempoary_IP:
         description: '固件 IP 地址 [可选]'
         default: ''

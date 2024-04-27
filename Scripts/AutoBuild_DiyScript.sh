@@ -8,9 +8,9 @@ Firmware_Diy_Core() {
 	
 	# 可用预设变量
 	# ${OP_AUTHOR}			OpenWrt 源码作者
-	# ${OP_REPO}				OpenWrt 仓库名称
+	# ${OP_REPO}			OpenWrt 仓库名称
 	# ${OP_BRANCH}			OpenWrt 源码分支
-	# ${CONFIG_FILE}			配置文件
+	# ${CONFIG_FILE}		配置文件
 	
 	Author=AUTO
 	# 作者名称, AUTO: [自动识别]
@@ -106,6 +106,7 @@ EOF
 		AddPackage themes thinktip luci-theme-neobird main
 		AddPackage msd_lite ximiTech luci-app-msd_lite main
 		AddPackage msd_lite ximiTech msd_lite main
+		AddPackage iptvhelper riverscn openwrt-iptvhelper master
 		rm -r ${WORK}/package/other/helloworld/mosdns
 		rm -r ${FEEDS_PKG}/mosdns
 		rm -r ${FEEDS_LUCI}/luci-app-mosdns
@@ -135,12 +136,10 @@ EOF
 			rm -r ${WORK}/package/passwall/openwrt-passwall-packages/xray-core
 		;;
 		x86_64)
-			sed -i "s?6.1?5.15?g" ${WORK}/target/linux/x86/Makefile
+			sed -i "s?6.1?6.6?g" ${WORK}/target/linux/x86/Makefile
 			ClashDL amd64 dev
 			ClashDL amd64 tun
 			ClashDL amd64 meta
-			ReleaseDL https://api.github.com/repos/nxtrace/NTrace-core/releases/latest nexttrace_linux_amd64 ${BASE_FILES}/bin nexttrace
-			Copy ${CustomFiles}/Depends/cpuset ${BASE_FILES}/bin
 			AddPackage passwall xiaorouji openwrt-passwall-packages main
 			AddPackage passwall xiaorouji openwrt-passwall main
 			AddPackage passwall xiaorouji openwrt-passwall2 main
@@ -148,26 +147,6 @@ EOF
 			rm -r ${WORK}/package/passwall/openwrt-passwall-packages/xray-plugin
 			# rm -rf packages/lean/autocore
 			# AddPackage lean Hyy2001X autocore-modify master
-
-			singbox_version="1.8.10"
-			hysteria_version="2.4.0"
-			wstunnel_version="9.2.5"
-			wget --quiet --no-check-certificate -P /tmp \
-				https://github.com/SagerNet/sing-box/releases/download/v${singbox_version}/sing-box-${singbox_version}-linux-amd64.tar.gz
-			wget --quiet --no-check-certificate -P /tmp \
-				https://github.com/apernet/hysteria/releases/download/app%2Fv${hysteria_version}/hysteria-linux-amd64
-			wget --quiet --no-check-certificate -P /tmp \
-				https://github.com/erebe/wstunnel/releases/download/v${wstunnel_version}/wstunnel_${wstunnel_version}_linux_amd64.tar.gz
-			tar -xvzf /tmp/sing-box-${singbox_version}-linux-amd64.tar.gz -C /tmp
-			tar -xvzf /tmp/wstunnel_${wstunnel_version}_linux_amd64.tar.gz -C /tmp
-			Copy /tmp/sing-box-${singbox_version}-linux-amd64/sing-box ${BASE_FILES}/usr/bin
-			Copy /tmp/wstunnel ${BASE_FILES}/usr/bin
-			Copy /tmp/hysteria-linux-amd64 ${BASE_FILES}/usr/bin hysteria
-
-			chmod 777 ${BASE_FILES}/usr/bin/sing-box ${BASE_FILES}/usr/bin/hysteria
-
-			# ReleaseDL https://api.github.com/repos/Loyalsoldier/v2ray-rules-dat/releases/latest geosite.dat ${BASE_FILES}/usr/v2ray
-			# ReleaseDL https://api.github.com/repos/Loyalsoldier/v2ray-rules-dat/releases/latest geoip.dat ${BASE_FILES}/usr/v2ray
 		;;
 		xiaomi_redmi-router-ax6s)
 			AddPackage passwall-depends xiaorouji openwrt-passwall-packages main
@@ -178,20 +157,30 @@ EOF
 	immortalwrt/immortalwrt*)
 		case "${TARGET_PROFILE}" in
 		x86_64)
-			Copy ${CustomFiles}/Depends/cpuset ${BASE_FILES}/bin
-			# sed -i "s?/bin/login?/usr/libexec/login.sh?g" ${FEEDS_PKG}/ttyd/files/ttyd.config
 			sed -i -- 's:/bin/ash:'/bin/bash':g' ${BASE_FILES}/etc/passwd
-			AddPackage passwall xiaorouji openwrt-passwall2 main
-			AddPackage passwall xiaorouji openwrt-passwall main
-			rm -r ${FEEDS_LUCI}/luci-app-passwall
-			AddPackage other fw876 helloworld main
-			rm -r ${WORK}/package/other/helloworld/mosdns
-			rm -r ${FEEDS_PKG}/mosdns
-			AddPackage other sbwml luci-app-mosdns v5
-			AddPackage other vernesong OpenClash dev
-			ClashDL amd64 dev
-			ClashDL amd64 tun
-			ClashDL amd64 meta
+			case "${CONFIG_FILE}" in
+			x86_64-Next)
+				# sed -i "s?/bin/login?/usr/libexec/login.sh?g" ${FEEDS_PKG}/ttyd/files/ttyd.config
+				AddPackage passwall xiaorouji openwrt-passwall2 main
+				rm -r ${FEEDS_PKG}/mosdns
+				rm -r ${FEEDS_PKG}/xray-core
+				rm -r ${FEEDS_PKG}/xray-plugin
+				AddPackage other sbwml luci-app-mosdns v5
+				rm -r ${FEEDS_PKG}/curl
+				Copy ${CustomFiles}/curl ${FEEDS_PKG}
+			;;
+			x86_64-NextV21)
+				# sed -i "s?/bin/login?/usr/libexec/login.sh?g" ${FEEDS_PKG}/ttyd/files/ttyd.config
+				AddPackage passwall xiaorouji openwrt-passwall2 main
+				AddPackage passwall xiaorouji openwrt-passwall main
+				rm -r ${FEEDS_LUCI}/luci-app-passwall
+				rm -r ${FEEDS_PKG}/xray-core
+				rm -r ${FEEDS_PKG}/xray-plugin
+				AddPackage other sbwml luci-app-mosdns v5
+				rm -r ${WORK}/package/other/luci-app-mosdns/mosdns
+				patch < ${CustomFiles}/mt7981/0001-Add-iptables-socket.patch -p1 -d ${WORK}
+			;;
+			esac
 		;;
 		esac
 	;;
@@ -204,8 +193,8 @@ EOF
 	;;
 	hanwckf/immortalwrt-mt798x*)
 		case "${TARGET_PROFILE}" in
-		cmcc_rax3000m)
-			AddPackage passwall xiaorouji openwrt-passwall-packages main
+		cmcc_rax3000m | jcg_q30)
+      AddPackage passwall xiaorouji openwrt-passwall-packages main
       AddPackage passwall xiaorouji openwrt-passwall main
       AddPackage passwall xiaorouji openwrt-passwall2 main
       rm -r ${WORK}/package/passwall/openwrt-passwall-packages/xray-core
@@ -216,10 +205,11 @@ EOF
       ClashDL arm64 tun
       ClashDL arm64 meta
 
-			Copy ${CustomFiles}/020-wapp-btm--steering.patch ${WORK}/package/mtk/drivers/mt_wifi/patches
-			Copy ${CustomFiles}/MT7981_iPAiLNA_EEPROM.bin ${WORK}/package/mtk/drivers/mt_wifi/files/mt7981-default-eeprom
+			AddPackage other sbwml luci-app-mosdns v5
+   		rm -r ${WORK}/package/other/luci-app-mosdns/mosdns
+			patch < ${CustomFiles}/mt7981/0001-Add-iptables-socket.patch -p1 -d ${WORK}
 
-      singbox_version="1.8.12"
+			singbox_version="1.8.12"
       hysteria_version="2.4.1"
       wget --quiet --no-check-certificate -P /tmp \
         https://github.com/SagerNet/sing-box/releases/download/v${singbox_version}/sing-box-${singbox_version}-linux-arm64.tar.gz
@@ -232,6 +222,32 @@ EOF
       chmod 777 ${BASE_FILES}/usr/bin/sing-box ${BASE_FILES}/usr/bin/hysteria
 		;;
 		esac
+	;;
+	esac
+	case "${TARGET_PROFILE}" in
+	x86_64)
+		ReleaseDL https://api.github.com/repos/nxtrace/NTrace-core/releases/latest nexttrace_linux_amd64 ${BASE_FILES}/bin nexttrace
+		Copy ${CustomFiles}/Depends/cpuset ${BASE_FILES}/bin
+
+		singbox_version="1.8.11"
+		hysteria_version="2.4.1"
+		wstunnel_version="9.3.0"
+		wget --quiet --no-check-certificate -P /tmp \
+			https://github.com/SagerNet/sing-box/releases/download/v${singbox_version}/sing-box-${singbox_version}-linux-amd64.tar.gz
+		wget --quiet --no-check-certificate -P /tmp \
+			https://github.com/apernet/hysteria/releases/download/app%2Fv${hysteria_version}/hysteria-linux-amd64
+		wget --quiet --no-check-certificate -P /tmp \
+			https://github.com/erebe/wstunnel/releases/download/v${wstunnel_version}/wstunnel_${wstunnel_version}_linux_amd64.tar.gz
+		tar -xvzf /tmp/sing-box-${singbox_version}-linux-amd64.tar.gz -C /tmp
+		tar -xvzf /tmp/wstunnel_${wstunnel_version}_linux_amd64.tar.gz -C /tmp
+		Copy /tmp/sing-box-${singbox_version}-linux-amd64/sing-box ${BASE_FILES}/usr/bin
+		Copy /tmp/wstunnel ${BASE_FILES}/usr/bin
+		Copy /tmp/hysteria-linux-amd64 ${BASE_FILES}/usr/bin hysteria
+
+		chmod 777 ${BASE_FILES}/usr/bin/sing-box ${BASE_FILES}/usr/bin/hysteria ${BASE_FILES}/usr/bin/wstunnel
+
+		# ReleaseDL https://api.github.com/repos/Loyalsoldier/v2ray-rules-dat/releases/latest geosite.dat ${BASE_FILES}/usr/v2ray
+		# ReleaseDL https://api.github.com/repos/Loyalsoldier/v2ray-rules-dat/releases/latest geoip.dat ${BASE_FILES}/usr/v2ray
 	;;
 	esac
 }
