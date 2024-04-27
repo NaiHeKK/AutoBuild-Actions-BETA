@@ -194,16 +194,13 @@ EOF
 	hanwckf/immortalwrt-mt798x*)
 		case "${TARGET_PROFILE}" in
 		cmcc_rax3000m | jcg_q30)
-      AddPackage passwall xiaorouji openwrt-passwall-packages main
       AddPackage passwall xiaorouji openwrt-passwall main
       AddPackage passwall xiaorouji openwrt-passwall2 main
-      rm -r ${WORK}/package/passwall/openwrt-passwall-packages/xray-core
-      rm -r ${WORK}/package/passwall/openwrt-passwall-packages/xray-plugin
+      rm -r ${FEEDS_LUCI}/luci-app-passwall
+      rm -r ${FEEDS_PKG}/xray-core
+      rm -r ${FEEDS_PKG}/xray-plugin
 
       AddPackage other vernesong OpenClash dev
-      ClashDL arm64 dev
-      ClashDL arm64 tun
-      ClashDL arm64 meta
 
 			AddPackage other sbwml luci-app-mosdns v5
    		rm -r ${WORK}/package/other/luci-app-mosdns/mosdns
