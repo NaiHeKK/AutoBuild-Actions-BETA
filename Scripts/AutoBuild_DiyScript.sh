@@ -205,10 +205,31 @@ EOF
 	hanwckf/immortalwrt-mt798x*)
 		case "${TARGET_PROFILE}" in
 		cmcc_rax3000m)
-			AddPackage passwall xiaorouji openwrt-passwall main
-			rm -r ${FEEDS_LUCI}/luci-app-passwall
+			AddPackage passwall xiaorouji openwrt-passwall-packages main
+      AddPackage passwall xiaorouji openwrt-passwall main
+      AddPackage passwall xiaorouji openwrt-passwall2 main
+      rm -r ${WORK}/package/passwall/openwrt-passwall-packages/xray-core
+      rm -r ${WORK}/package/passwall/openwrt-passwall-packages/xray-plugin
+
+      AddPackage other vernesong OpenClash dev
+      ClashDL arm64 dev
+      ClashDL arm64 tun
+      ClashDL arm64 meta
+
 			Copy ${CustomFiles}/020-wapp-btm--steering.patch ${WORK}/package/mtk/drivers/mt_wifi/patches
 			Copy ${CustomFiles}/MT7981_iPAiLNA_EEPROM.bin ${WORK}/package/mtk/drivers/mt_wifi/files/mt7981-default-eeprom
+
+      singbox_version="1.8.12"
+      hysteria_version="2.4.1"
+      wget --quiet --no-check-certificate -P /tmp \
+        https://github.com/SagerNet/sing-box/releases/download/v${singbox_version}/sing-box-${singbox_version}-linux-arm64.tar.gz
+      wget --quiet --no-check-certificate -P /tmp \
+        https://github.com/apernet/hysteria/releases/download/app%2Fv${hysteria_version}/hysteria-linux-arm64
+      tar -xvzf /tmp/sing-box-${singbox_version}-linux-arm64.tar.gz -C /tmp
+      Copy /tmp/sing-box-${singbox_version}-linux-arm64/sing-box ${BASE_FILES}/usr/bin
+      Copy /tmp/hysteria-linux-arm64 ${BASE_FILES}/usr/bin hysteria
+
+      chmod 777 ${BASE_FILES}/usr/bin/sing-box ${BASE_FILES}/usr/bin/hysteria
 		;;
 		esac
 	;;
