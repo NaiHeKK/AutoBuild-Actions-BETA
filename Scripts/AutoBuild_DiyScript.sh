@@ -207,7 +207,7 @@ EOF
 			patch < ${CustomFiles}/mt7981/0001-Add-iptables-socket.patch -p1 -d ${WORK}
 
 			singbox_version="1.8.12"
-      hysteria_version="2.4.1"
+      hysteria_version="2.4.3"
       wget --quiet --no-check-certificate -P /tmp \
         https://github.com/SagerNet/sing-box/releases/download/v${singbox_version}/sing-box-${singbox_version}-linux-arm64.tar.gz
       wget --quiet --no-check-certificate -P /tmp \
