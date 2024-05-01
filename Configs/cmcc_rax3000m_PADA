@@ -1,6 +1,6 @@
 CONFIG_TARGET_mediatek=y
 CONFIG_TARGET_mediatek_mt7981=y
-CONFIG_TARGET_mediatek_mt7981_DEVICE_cmcc_rax3000m=y
+CONFIG_TARGET_mediatek_mt7981_DEVICE_cmcc_rax3000m-256m=y
 CONFIG_DEVEL=y
 CONFIG_TOOLCHAINOPTS=y
 CONFIG_BUSYBOX_CUSTOM=y
@@ -196,6 +196,15 @@ CONFIG_NFS_KERNEL_SERVER_V4=y
 # CONFIG_OPENSSL_ENGINE_BUILTIN is not set
 # CONFIG_OPENSSL_PREFER_CHACHA_OVER_GCM is not set
 CONFIG_OPENSSL_WITH_NPN=y
+
+# Argon主题
+CONFIG_PACKAGE_luci-theme-argon=y
+CONFIG_PACKAGE_luci-app-argon-config=y
+CONFIG_PACKAGE_luci-i18n-argon-config-zh-cn=y
+
+# OpenClash
+CONFIG_PACKAGE_luci-app-openclash=y
+
 # CONFIG_PACKAGE_TURBOACC_INCLUDE_FLOW_OFFLOADING is not set
 CONFIG_PACKAGE_TURBOACC_INCLUDE_NO_FASTPATH=y
 CONFIG_PACKAGE_attr=y
@@ -373,7 +382,7 @@ CONFIG_PACKAGE_luci-app-nfs=y
 # CONFIG_PACKAGE_luci-app-rclone_INCLUDE_rclone-webui is not set
 CONFIG_PACKAGE_luci-app-samba4=y
 CONFIG_PACKAGE_luci-app-socat=y
-CONFIG_PACKAGE_luci-app-ssr-plus=y
+# CONFIG_PACKAGE_luci-app-ssr-plus is not set
 # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_ShadowsocksR_Libev_Client is not set
 CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Shadowsocks_NONE_Client=y
 CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Shadowsocks_NONE_Server=y
@@ -395,7 +404,6 @@ CONFIG_PACKAGE_luci-app-wol=y
 CONFIG_PACKAGE_luci-app-zerotier=y
 CONFIG_PACKAGE_luci-i18n-accesscontrol-zh-cn=y
 CONFIG_PACKAGE_luci-i18n-autoreboot-zh-cn=y
-CONFIG_PACKAGE_luci-i18n-cpufreq-zh-cn=y
 CONFIG_PACKAGE_luci-i18n-diskman-zh-cn=y
 CONFIG_PACKAGE_luci-i18n-eqos-mtk-zh-cn=y
 CONFIG_PACKAGE_luci-i18n-hd-idle-zh-cn=y
@@ -538,8 +546,11 @@ CONFIG_PACKAGE_luci-i18n-passwall-zh-cn=y
 CONFIG_PACKAGE_luci-app-msd_lite=y
 CONFIG_PACKAGE_luci-app-https-dns-proxy=y
 CONFIG_PACKAGE_logger=y
-
-# Argon主题
-CONFIG_PACKAGE_luci-theme-argon=y
-CONFIG_PACKAGE_luci-app-argon-config=y
-CONFIG_PACKAGE_luci-i18n-argon-config-zh-cn=y
+CONFIG_PACKAGE_ddns-go=y
+CONFIG_PACKAGE_luci-app-ddns-go=y
+CONFIG_PACKAGE_wpad-openssl=y
+CONFIG_PACKAGE_luci-app-iptvhelper=y
+CONFIG_PACKAGE_luci-app-mosdns=y
+CONFIG_PACKAGE_iptables-mod-socket=y
+CONFIG_PACKAGE_kmod-ipt-socket=y
+CONFIG_PACKAGE_lsof=y
