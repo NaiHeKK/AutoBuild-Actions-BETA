@@ -152,31 +152,6 @@ EOF
 			AddPackage passwall-depends xiaorouji openwrt-passwall-packages main
 			AddPackage passwall-luci xiaorouji openwrt-passwall main
 		;;
-    cmcc_rax3000m)
-      AddPackage passwall xiaorouji openwrt-passwall main
-      AddPackage passwall xiaorouji openwrt-passwall2 main
-      rm -r ${FEEDS_LUCI}/luci-app-passwall
-      rm -r ${FEEDS_PKG}/xray-core
-      rm -r ${FEEDS_PKG}/xray-plugin
-
-      AddPackage other vernesong OpenClash dev
-
-			AddPackage other sbwml luci-app-mosdns v5
-   		rm -r ${WORK}/package/other/luci-app-mosdns/mosdns
-			patch < ${CustomFiles}/mt7981/0001-Add-iptables-socket.patch -p1 -d ${WORK}
-
-			singbox_version="1.8.12"
-      hysteria_version="2.4.3"
-      wget --quiet --no-check-certificate -P /tmp \
-        https://github.com/SagerNet/sing-box/releases/download/v${singbox_version}/sing-box-${singbox_version}-linux-arm64.tar.gz
-      wget --quiet --no-check-certificate -P /tmp \
-        https://github.com/apernet/hysteria/releases/download/app%2Fv${hysteria_version}/hysteria-linux-arm64
-      tar -xvzf /tmp/sing-box-${singbox_version}-linux-arm64.tar.gz -C /tmp
-      Copy /tmp/sing-box-${singbox_version}-linux-arm64/sing-box ${BASE_FILES}/usr/bin
-      Copy /tmp/hysteria-linux-arm64 ${BASE_FILES}/usr/bin hysteria
-
-      chmod 777 ${BASE_FILES}/usr/bin/sing-box ${BASE_FILES}/usr/bin/hysteria
-		;;
 		esac
 	;;
 	immortalwrt/immortalwrt*)
