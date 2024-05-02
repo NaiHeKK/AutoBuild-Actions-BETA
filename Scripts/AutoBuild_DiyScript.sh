@@ -191,7 +191,7 @@ EOF
 		;;
 		esac
 	;;
-	hanwckf/immortalwrt-mt798x*)
+	hanwckf/immortalwrt-mt798x* | padavanonly/immortalwrt-mt798x*)
 		case "${TARGET_PROFILE}" in
 		cmcc_rax3000m | jcg_q30)
       AddPackage passwall xiaorouji openwrt-passwall main
