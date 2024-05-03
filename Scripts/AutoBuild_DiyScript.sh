@@ -184,16 +184,6 @@ EOF
 		x86_64)
 			sed -i -- 's:/bin/ash:'/bin/bash':g' ${BASE_FILES}/etc/passwd
 			case "${CONFIG_FILE}" in
-			x86_64-Next)
-				# sed -i "s?/bin/login?/usr/libexec/login.sh?g" ${FEEDS_PKG}/ttyd/files/ttyd.config
-				AddPackage passwall xiaorouji openwrt-passwall2 main
-				rm -r ${FEEDS_PKG}/mosdns
-				rm -r ${FEEDS_PKG}/xray-core
-				rm -r ${FEEDS_PKG}/xray-plugin
-				AddPackage other sbwml luci-app-mosdns v5
-				rm -r ${FEEDS_PKG}/curl
-				Copy ${CustomFiles}/curl ${FEEDS_PKG}
-			;;
 			x86_64-NextV21)
 				# sed -i "s?/bin/login?/usr/libexec/login.sh?g" ${FEEDS_PKG}/ttyd/files/ttyd.config
 				AddPackage passwall xiaorouji openwrt-passwall2 main
@@ -250,10 +240,10 @@ EOF
 	x86_64)
 		ReleaseDL https://api.github.com/repos/nxtrace/NTrace-core/releases/latest nexttrace_linux_amd64 ${BASE_FILES}/bin nexttrace
 		Copy ${CustomFiles}/Depends/cpuset ${BASE_FILES}/bin
-
-		singbox_version="1.8.11"
-		hysteria_version="2.4.1"
-		wstunnel_version="9.3.0"
+		
+		singbox_version="1.8.12"
+		hysteria_version="2.4.3"
+		wstunnel_version="9.4.1"
 		wget --quiet --no-check-certificate -P /tmp \
 			https://github.com/SagerNet/sing-box/releases/download/v${singbox_version}/sing-box-${singbox_version}-linux-amd64.tar.gz
 		wget --quiet --no-check-certificate -P /tmp \
