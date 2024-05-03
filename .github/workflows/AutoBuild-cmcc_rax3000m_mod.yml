@@ -237,7 +237,7 @@ jobs:
         fi
         if [ "${{ github.event.inputs.Testing_KERNEL }}" == true ]
         then
-            echo ""
+            echo "Testing_KERNEL"
             echo -e "\nCONFIG_TESTING_KERNEL=y\n" >> $GITHUB_WORKSPACE/Configs/$CONFIG_FILE
         fi
         cp $GITHUB_WORKSPACE/Configs/$CONFIG_FILE .config
