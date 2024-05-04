@@ -136,17 +136,19 @@ EOF
 			rm -r ${WORK}/package/passwall/openwrt-passwall-packages/xray-core
 		;;
 		x86_64)
-			sed -i "s?6.1?6.6?g" ${WORK}/target/linux/x86/Makefile
+			# sed -i "s?6.1?6.6?g" ${WORK}/target/linux/x86/Makefile
 			ClashDL amd64 dev
 			ClashDL amd64 tun
 			ClashDL amd64 meta
 			AddPackage passwall xiaorouji openwrt-passwall-packages main
 			AddPackage passwall xiaorouji openwrt-passwall main
-			AddPackage passwall xiaorouji openwrt-passwall2 main
+			# AddPackage passwall xiaorouji openwrt-passwall2 main
 			rm -r ${WORK}/package/passwall/openwrt-passwall-packages/xray-core
 			rm -r ${WORK}/package/passwall/openwrt-passwall-packages/xray-plugin
 			# rm -rf packages/lean/autocore
 			# AddPackage lean Hyy2001X autocore-modify master
+			Copy ${CustomFiles}/speedtest ${BASE_FILES}/usr/bin
+			chmod +x ${BASE_FILES}/usr/bin/speedtest
 		;;
 		xiaomi_redmi-router-ax6s)
 			AddPackage passwall-depends xiaorouji openwrt-passwall-packages main
@@ -186,7 +188,7 @@ EOF
 			case "${CONFIG_FILE}" in
 			x86_64-NextV21)
 				# sed -i "s?/bin/login?/usr/libexec/login.sh?g" ${FEEDS_PKG}/ttyd/files/ttyd.config
-				AddPackage passwall xiaorouji openwrt-passwall2 main
+				# AddPackage passwall xiaorouji openwrt-passwall2 main
 				AddPackage passwall xiaorouji openwrt-passwall main
 				rm -r ${FEEDS_LUCI}/luci-app-passwall
 				rm -r ${FEEDS_PKG}/xray-core
@@ -194,6 +196,8 @@ EOF
 				AddPackage other sbwml luci-app-mosdns v5
 				rm -r ${WORK}/package/other/luci-app-mosdns/mosdns
 				patch < ${CustomFiles}/mt7981/0001-Add-iptables-socket.patch -p1 -d ${WORK}
+				Copy ${CustomFiles}/speedtest ${BASE_FILES}/usr/bin
+				chmod +x ${BASE_FILES}/usr/bin/speedtest
 			;;
 			esac
 		;;
