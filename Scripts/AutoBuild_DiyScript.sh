@@ -156,7 +156,7 @@ EOF
 			AddPackage passwall-depends xiaorouji openwrt-passwall-packages main
 			AddPackage passwall-luci xiaorouji openwrt-passwall main
 		;;
-    cmcc_rax3000m)
+    cmcc_rax3000m*)
       AddPackage passwall xiaorouji openwrt-passwall main
       AddPackage passwall xiaorouji openwrt-passwall2 main
       rm -r ${FEEDS_LUCI}/luci-app-passwall
