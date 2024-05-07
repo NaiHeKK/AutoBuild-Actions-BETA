@@ -179,7 +179,7 @@ EOF
       tar -xvzf /tmp/sing-box-${singbox_version}-linux-arm64.tar.gz -C /tmp
       Copy /tmp/sing-box-${singbox_version}-linux-arm64/sing-box ${BASE_FILES}/usr/bin
       Copy /tmp/hysteria-linux-arm64 ${BASE_FILES}/usr/bin hysteria
-      Copy /tmp/cloudflared-linux-amd64 ${BASE_FILES}/usr/bin cloudflared
+      Copy /tmp/cloudflared-linux-arm64 ${BASE_FILES}/usr/bin cloudflared
 
       chmod 777 ${BASE_FILES}/usr/bin/sing-box ${BASE_FILES}/usr/bin/hysteria ${BASE_FILES}/usr/bin/cloudflared
 		;;
