@@ -157,13 +157,12 @@ EOF
 			AddPackage passwall-luci xiaorouji openwrt-passwall main
 		;;
     cmcc_rax3000m*)
+      AddPackage passwall xiaorouji openwrt-passwall-packages main
       AddPackage passwall xiaorouji openwrt-passwall main
-      AddPackage passwall xiaorouji openwrt-passwall2 main
-      rm -r ${FEEDS_LUCI}/luci-app-passwall
-      rm -r ${FEEDS_PKG}/xray-core
-      rm -r ${FEEDS_PKG}/xray-plugin
-
-      AddPackage other vernesong OpenClash dev
+      rm -r ${WORK}/package/passwall/openwrt-passwall-packages/xray-core
+      rm -r ${WORK}/package/passwall/openwrt-passwall-packages/xray-plugin
+      rm -r ${WORK}/package/other/helloworld/xray-core
+      rm -r ${WORK}/package/other/helloworld/xray-plugin
 
 			AddPackage other sbwml luci-app-mosdns v5
    		rm -r ${WORK}/package/other/luci-app-mosdns/mosdns
