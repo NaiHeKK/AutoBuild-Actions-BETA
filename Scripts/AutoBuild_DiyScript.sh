@@ -166,7 +166,6 @@ EOF
 
 			AddPackage other sbwml luci-app-mosdns v5
    		rm -r ${WORK}/package/other/luci-app-mosdns/mosdns
-			patch < ${CustomFiles}/mt7981/0001-Add-iptables-socket.patch -p1 -d ${WORK}
 
 			singbox_version="1.8.13"
       hysteria_version="2.4.3"
