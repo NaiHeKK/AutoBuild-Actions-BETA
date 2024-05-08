@@ -161,27 +161,18 @@ EOF
       AddPackage passwall xiaorouji openwrt-passwall main
       rm -r ${WORK}/package/passwall/openwrt-passwall-packages/xray-core
       rm -r ${WORK}/package/passwall/openwrt-passwall-packages/xray-plugin
-      rm -r ${WORK}/package/other/helloworld/xray-core
-      rm -r ${WORK}/package/other/helloworld/xray-plugin
-
-			AddPackage other sbwml luci-app-mosdns v5
-   		rm -r ${WORK}/package/other/luci-app-mosdns/mosdns
 
 			singbox_version="1.8.13"
       hysteria_version="2.4.3"
-      cloudflared_version="2024.4.1"
       wget --quiet --no-check-certificate -P /tmp \
         https://github.com/SagerNet/sing-box/releases/download/v${singbox_version}/sing-box-${singbox_version}-linux-arm64.tar.gz
       wget --quiet --no-check-certificate -P /tmp \
         https://github.com/apernet/hysteria/releases/download/app%2Fv${hysteria_version}/hysteria-linux-arm64
-      wget --quiet --no-check-certificate -P /tmp \
-        https://github.com/cloudflare/cloudflared/releases/download/${cloudflared_version}/cloudflared-linux-arm64
       tar -xvzf /tmp/sing-box-${singbox_version}-linux-arm64.tar.gz -C /tmp
       Copy /tmp/sing-box-${singbox_version}-linux-arm64/sing-box ${BASE_FILES}/usr/bin
       Copy /tmp/hysteria-linux-arm64 ${BASE_FILES}/usr/bin hysteria
-      Copy /tmp/cloudflared-linux-arm64 ${BASE_FILES}/usr/bin cloudflared
 
-      chmod 777 ${BASE_FILES}/usr/bin/sing-box ${BASE_FILES}/usr/bin/hysteria ${BASE_FILES}/usr/bin/cloudflared
+      chmod 777 ${BASE_FILES}/usr/bin/sing-box ${BASE_FILES}/usr/bin/hysteria
 		;;
 		esac
 	;;
