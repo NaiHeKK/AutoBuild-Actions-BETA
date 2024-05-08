@@ -214,6 +214,8 @@ jobs:
         git clone -b $REPO_BRANCH $REPO_URL openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
         cd openwrt
+        echo "src-git kenzo https://github.com/kenzok8/openwrt-packages" >> ./feeds.conf.default
+        echo "src-git small https://github.com/kenzok8/small" >> ./feeds.conf.default
         ./scripts/feeds update -a
         ./scripts/feeds install -a
 
@@ -269,8 +271,6 @@ jobs:
             echo -e "\nCONFIG_DOCKER_STO_EXT4=y" >> $GITHUB_WORKSPACE/Configs/$CONFIG_FILE
             echo -e "\nCONFIG_PACKAGE_docker-compose=y\n" >> $GITHUB_WORKSPACE/Configs/$CONFIG_FILE
         fi
-        echo "src-git kenzo https://github.com/kenzok8/openwrt-packages" >> ./feeds.conf.default
-        echo "src-git small https://github.com/kenzok8/small" >> ./feeds.conf.default
         cp $GITHUB_WORKSPACE/Configs/$CONFIG_FILE .config
         source $GITHUB_WORKSPACE/Scripts/AutoBuild_DiyScript.sh
         source $GITHUB_WORKSPACE/Scripts/AutoBuild_Function.sh
