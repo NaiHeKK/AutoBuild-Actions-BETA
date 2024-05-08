@@ -157,8 +157,6 @@ EOF
     cmcc_rax3000m*)
       AddPackage passwall xiaorouji openwrt-passwall-packages main
       AddPackage passwall xiaorouji openwrt-passwall main
-      rm -r ${WORK}/package/passwall/openwrt-passwall-packages/xray-core
-      rm -r ${WORK}/package/passwall/openwrt-passwall-packages/xray-plugin
 
 			singbox_version="1.8.13"
       hysteria_version="2.4.3"

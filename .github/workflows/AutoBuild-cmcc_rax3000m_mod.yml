@@ -33,6 +33,10 @@ on:
         description: '启用测试版内核？'
         default: false
         type: boolean
+      INCLUDE_DOCKER:
+        description: '添加Docker？'
+        default: false
+        type: boolean
   ### 界面控制部分结束 ( 以上内容请保持不变 )
 
   ## Git Push 时触发编译(不要删除此行注释)
@@ -254,6 +258,16 @@ jobs:
         then
             echo "Testing_KERNEL"
             echo -e "\nCONFIG_TESTING_KERNEL=y\n" >> $GITHUB_WORKSPACE/Configs/$CONFIG_FILE
+        fi
+        if [ "${{ github.event.inputs.INCLUDE_DOCKER }}" == true ]
+        then
+            echo "INCLUDE_DOCKER"
+            echo -e "\nCONFIG_PACKAGE_luci-app-docker=y" >> $GITHUB_WORKSPACE/Configs/$CONFIG_FILE
+            echo -e "\nCONFIG_PACKAGE_docker=y" >> $GITHUB_WORKSPACE/Configs/$CONFIG_FILE
+            echo -e "\nCONFIG_DOCKER_CGROUP_OPTIONS=y" >> $GITHUB_WORKSPACE/Configs/$CONFIG_FILE
+            echo -e "\nCONFIG_DOCKER_OPTIONAL_FEATURES=y" >> $GITHUB_WORKSPACE/Configs/$CONFIG_FILE
+            echo -e "\nCONFIG_DOCKER_STO_EXT4=y" >> $GITHUB_WORKSPACE/Configs/$CONFIG_FILE
+            echo -e "\nCONFIG_PACKAGE_docker-compose=y\n" >> $GITHUB_WORKSPACE/Configs/$CONFIG_FILE
         fi
         cp $GITHUB_WORKSPACE/Configs/$CONFIG_FILE .config
         source $GITHUB_WORKSPACE/Scripts/AutoBuild_DiyScript.sh
