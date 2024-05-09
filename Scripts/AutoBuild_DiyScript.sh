@@ -155,20 +155,7 @@ EOF
 			AddPackage passwall-luci xiaorouji openwrt-passwall main
 		;;
     cmcc_rax3000m*)
-      AddPackage passwall xiaorouji openwrt-passwall-packages main
-      AddPackage passwall xiaorouji openwrt-passwall main
-
-			singbox_version="1.8.13"
-      hysteria_version="2.4.3"
-      wget --quiet --no-check-certificate -P /tmp \
-        https://github.com/SagerNet/sing-box/releases/download/v${singbox_version}/sing-box-${singbox_version}-linux-arm64.tar.gz
-      wget --quiet --no-check-certificate -P /tmp \
-        https://github.com/apernet/hysteria/releases/download/app%2Fv${hysteria_version}/hysteria-linux-arm64
-      tar -xvzf /tmp/sing-box-${singbox_version}-linux-arm64.tar.gz -C /tmp
-      Copy /tmp/sing-box-${singbox_version}-linux-arm64/sing-box ${BASE_FILES}/usr/bin
-      Copy /tmp/hysteria-linux-arm64 ${BASE_FILES}/usr/bin hysteria
-
-      chmod 777 ${BASE_FILES}/usr/bin/sing-box ${BASE_FILES}/usr/bin/hysteria
+      
 		;;
 		esac
 	;;
