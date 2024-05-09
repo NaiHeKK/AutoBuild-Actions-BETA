@@ -21,7 +21,7 @@ Firmware_Diy_Core() {
 	Default_Flag=AUTO
 	# 固件标签 (名称后缀), 适用不同配置文件, AUTO: [自动识别]
 	
-	Default_IP="192.168.1.1"
+	Default_IP="10.0.0.1"
 	# 固件 IP 地址
 	
 	Default_Title="Powered by AutoBuild-Actions"
@@ -97,21 +97,7 @@ EOF
 		# sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
 		# sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase="/luci-static/argon-mod"' $(PKG_Finder d package default-settings)/files/zzz-default-settings
 
-		rm -r ${FEEDS_LUCI}/luci-theme-argon*
-		AddPackage other vernesong OpenClash dev
-		AddPackage other jerrykuku luci-app-argon-config master
-		AddPackage other fw876 helloworld main
-		AddPackage other sbwml luci-app-mosdns v5
-		AddPackage themes jerrykuku luci-theme-argon 18.06
-		AddPackage themes thinktip luci-theme-neobird main
-		AddPackage msd_lite ximiTech luci-app-msd_lite main
-		AddPackage msd_lite ximiTech msd_lite main
-		AddPackage iptvhelper riverscn openwrt-iptvhelper master
-		rm -r ${WORK}/package/other/helloworld/mosdns
-		rm -r ${FEEDS_PKG}/mosdns
-		rm -r ${FEEDS_LUCI}/luci-app-mosdns
 		rm -r ${FEEDS_PKG}/curl
-		rm -r ${FEEDS_PKG}/msd_lite
 		Copy ${CustomFiles}/curl ${FEEDS_PKG}
 		
 		case "${TARGET_BOARD}" in
@@ -150,6 +136,9 @@ EOF
 			AddPackage passwall-depends xiaorouji openwrt-passwall-packages main
 			AddPackage passwall-luci xiaorouji openwrt-passwall main
 		;;
+    cmcc_rax3000m*)
+
+		;;
 		esac
 	;;
 	immortalwrt/immortalwrt*)
@@ -181,22 +170,40 @@ EOF
 		;;
 		esac
 	;;
-	hanwckf/immortalwrt-mt798x*)
+	hanwckf/immortalwrt-mt798x* | padavanonly/immortalwrt-mt798x*)
 		case "${TARGET_PROFILE}" in
 		cmcc_rax3000m | jcg_q30)
-			AddPackage passwall xiaorouji openwrt-passwall main
+      AddPackage passwall xiaorouji openwrt-passwall main
+      AddPackage passwall xiaorouji openwrt-passwall2 main
+      rm -r ${FEEDS_LUCI}/luci-app-passwall
+      rm -r ${FEEDS_PKG}/xray-core
+      rm -r ${FEEDS_PKG}/xray-plugin
+
+      AddPackage other vernesong OpenClash dev
+
 			AddPackage other sbwml luci-app-mosdns v5
-   			rm -r ${WORK}/package/other/luci-app-mosdns/mosdns
-			rm -r ${FEEDS_LUCI}/luci-app-passwall
+   		rm -r ${WORK}/package/other/luci-app-mosdns/mosdns
 			patch < ${CustomFiles}/mt7981/0001-Add-iptables-socket.patch -p1 -d ${WORK}
-			
-			mosdns_version="5.3.1"
-			wget --quiet --no-check-certificate -P /tmp \
-				https://github.com/IrineSistiana/mosdns/releases/download/v${mosdns_version}/mosdns-linux-arm64.zip
-			unzip /tmp/mosdns-linux-arm64.zip -d /tmp
-			Copy /tmp/mosdns ${BASE_FILES}/usr/bin
-			chmod +x ${BASE_FILES}/usr/bin
-			sed -i "s?+mosdns ??g" ${WORK}/package/other/luci-app-mosdns/luci-app-mosdns/Makefile
+
+			singbox_version="1.8.13"
+      hysteria_version="2.4.3"
+      wget --quiet --no-check-certificate -P /tmp \
+        https://github.com/SagerNet/sing-box/releases/download/v${singbox_version}/sing-box-${singbox_version}-linux-arm64.tar.gz
+      wget --quiet --no-check-certificate -P /tmp \
+        https://github.com/apernet/hysteria/releases/download/app%2Fv${hysteria_version}/hysteria-linux-arm64
+      tar -xvzf /tmp/sing-box-${singbox_version}-linux-arm64.tar.gz -C /tmp
+      Copy /tmp/sing-box-${singbox_version}-linux-arm64/sing-box ${BASE_FILES}/usr/bin
+      Copy /tmp/hysteria-linux-arm64 ${BASE_FILES}/usr/bin hysteria
+
+      chmod 777 ${BASE_FILES}/usr/bin/sing-box ${BASE_FILES}/usr/bin/hysteria
+
+      mosdns_version="5.3.1"
+      wget --quiet --no-check-certificate -P /tmp \
+      	https://github.com/IrineSistiana/mosdns/releases/download/v${mosdns_version}/mosdns-linux-arm64.zip
+      unzip /tmp/mosdns-linux-arm64.zip -d /tmp
+      Copy /tmp/mosdns ${BASE_FILES}/usr/bin
+      chmod +x ${BASE_FILES}/usr/bin
+      sed -i "s?+mosdns ??g" ${WORK}/package/other/luci-app-mosdns/luci-app-mosdns/Makefile
 		;;
 		esac
 	;;
