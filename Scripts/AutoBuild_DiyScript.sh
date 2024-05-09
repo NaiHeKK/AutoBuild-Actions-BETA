@@ -141,7 +141,7 @@ EOF
 			AddPackage passwall-luci xiaorouji openwrt-passwall main
 		;;
     cmcc_rax3000m*)
-      
+
 		;;
 		esac
 	;;
@@ -200,6 +200,14 @@ EOF
       Copy /tmp/hysteria-linux-arm64 ${BASE_FILES}/usr/bin hysteria
 
       chmod 777 ${BASE_FILES}/usr/bin/sing-box ${BASE_FILES}/usr/bin/hysteria
+
+      mosdns_version="5.3.1"
+      wget --quiet --no-check-certificate -P /tmp \
+      	https://github.com/IrineSistiana/mosdns/releases/download/v${mosdns_version}/mosdns-linux-arm64.zip
+      unzip /tmp/mosdns-linux-arm64.zip -d /tmp
+      Copy /tmp/mosdns ${BASE_FILES}/usr/bin
+      chmod +x ${BASE_FILES}/usr/bin
+      sed -i "s?+mosdns ??g" ${WORK}/package/other/luci-app-mosdns/luci-app-mosdns/Makefile
 		;;
 		esac
 	;;
