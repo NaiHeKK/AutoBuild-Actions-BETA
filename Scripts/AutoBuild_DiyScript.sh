@@ -155,10 +155,11 @@ EOF
 			AddPackage passwall-luci xiaorouji openwrt-passwall main
 		;;
     cmcc_rax3000m*)
+      AddPackage passwall xiaorouji openwrt-passwall-packages main
+      AddPackage passwall xiaorouji openwrt-passwall main
+      AddPackage passwall xiaorouji openwrt-passwall2 main
       rm -r ${WORK}/package/other/helloworld/xray-core
       rm -r ${WORK}/package/other/helloworld/xray-plugin
-
-			patch < ${CustomFiles}/mt7981/0001-Add-iptables-socket.patch -p1 -d ${WORK}
 		;;
 		esac
 	;;
