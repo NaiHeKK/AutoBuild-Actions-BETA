@@ -97,7 +97,21 @@ EOF
 		# sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
 		# sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase="/luci-static/argon-mod"' $(PKG_Finder d package default-settings)/files/zzz-default-settings
 
+		rm -r ${FEEDS_LUCI}/luci-theme-argon*
+		AddPackage other vernesong OpenClash dev
+		AddPackage other jerrykuku luci-app-argon-config master
+		AddPackage other fw876 helloworld main
+		AddPackage other sbwml luci-app-mosdns v5
+		AddPackage themes jerrykuku luci-theme-argon 18.06
+		AddPackage themes thinktip luci-theme-neobird main
+		AddPackage msd_lite ximiTech luci-app-msd_lite main
+		AddPackage msd_lite ximiTech msd_lite main
+		AddPackage iptvhelper riverscn openwrt-iptvhelper master
+		rm -r ${WORK}/package/other/helloworld/mosdns
+		rm -r ${FEEDS_PKG}/mosdns
+		rm -r ${FEEDS_LUCI}/luci-app-mosdns
 		rm -r ${FEEDS_PKG}/curl
+		rm -r ${FEEDS_PKG}/msd_lite
 		Copy ${CustomFiles}/curl ${FEEDS_PKG}
 		
 		case "${TARGET_BOARD}" in
@@ -116,6 +130,10 @@ EOF
 		case "${TARGET_PROFILE}" in
 		d-team_newifi-d2)
 			Copy ${CustomFiles}/${TARGET_PROFILE}_system ${BASE_FILES}/etc/config system
+			AddPackage passwall xiaorouji openwrt-passwall-packages main
+			AddPackage passwall xiaorouji openwrt-passwall main
+			AddPackage passwall xiaorouji openwrt-passwall2 main
+			rm -r ${WORK}/package/passwall/openwrt-passwall-packages/xray-core
 		;;
 		x86_64)
 			# sed -i "s?6.1?6.6?g" ${WORK}/target/linux/x86/Makefile
@@ -137,7 +155,10 @@ EOF
 			AddPackage passwall-luci xiaorouji openwrt-passwall main
 		;;
     cmcc_rax3000m*)
+      rm -r ${WORK}/package/other/helloworld/xray-core
+      rm -r ${WORK}/package/other/helloworld/xray-plugin
 
+			patch < ${CustomFiles}/mt7981/0001-Add-iptables-socket.patch -p1 -d ${WORK}
 		;;
 		esac
 	;;
@@ -184,18 +205,6 @@ EOF
 			AddPackage other sbwml luci-app-mosdns v5
    		rm -r ${WORK}/package/other/luci-app-mosdns/mosdns
 			patch < ${CustomFiles}/mt7981/0001-Add-iptables-socket.patch -p1 -d ${WORK}
-
-			singbox_version="1.8.13"
-      hysteria_version="2.4.3"
-      wget --quiet --no-check-certificate -P /tmp \
-        https://github.com/SagerNet/sing-box/releases/download/v${singbox_version}/sing-box-${singbox_version}-linux-arm64.tar.gz
-      wget --quiet --no-check-certificate -P /tmp \
-        https://github.com/apernet/hysteria/releases/download/app%2Fv${hysteria_version}/hysteria-linux-arm64
-      tar -xvzf /tmp/sing-box-${singbox_version}-linux-arm64.tar.gz -C /tmp
-      Copy /tmp/sing-box-${singbox_version}-linux-arm64/sing-box ${BASE_FILES}/usr/bin
-      Copy /tmp/hysteria-linux-arm64 ${BASE_FILES}/usr/bin hysteria
-
-      chmod 777 ${BASE_FILES}/usr/bin/sing-box ${BASE_FILES}/usr/bin/hysteria
 
       mosdns_version="5.3.1"
       wget --quiet --no-check-certificate -P /tmp \

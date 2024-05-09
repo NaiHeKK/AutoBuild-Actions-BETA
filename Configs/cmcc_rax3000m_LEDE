@@ -170,6 +170,7 @@ CONFIG_PACKAGE_luci-app-argon-config=y
 CONFIG_PACKAGE_luci-app-serverchan=y
 CONFIG_PACKAGE_luci-app-aliyundrive-webdav=y
 CONFIG_PACKAGE_luci-app-syncdial=y
+CONFIG_PACKAGE_luci-lua-runtime=y
 
 # i18n
 CONFIG_PACKAGE_luci-i18n-aliyundrive-webdav-zh-cn=y
