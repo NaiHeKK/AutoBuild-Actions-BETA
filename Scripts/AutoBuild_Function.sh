@@ -158,6 +158,7 @@ EOF
 		Copy ${CustomFiles}/Depends/base-files-essential ${BASE_FILES}/lib/upgrade/keep.d
 		case "${OP_AUTHOR}/${OP_REPO}" in
 		coolsnowwolf/lede)
+                        Copy ${CustomFiles}/Depends/coremark.sh $(PKG_Finder d feeds/packages coremark)
 			sed -i '\/etc\/firewall.user/d;/exit 0/d' ${Version_File}
 			if [[ -n ${TARGET_FLAG} ]]
 			then
