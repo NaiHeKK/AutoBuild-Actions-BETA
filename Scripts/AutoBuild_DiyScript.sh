@@ -157,6 +157,8 @@ EOF
       AddPackage passwall xiaorouji openwrt-passwall2 main
       rm -r ${WORK}/package/other/helloworld/xray-core
       rm -r ${WORK}/package/other/helloworld/xray-plugin
+      rm -r ${WORK}/package/network/services/dnsmasq
+      Copy ${CustomFiles}/dnsmasq ${WORK}/package/network/services
 		;;
 		esac
 	;;
