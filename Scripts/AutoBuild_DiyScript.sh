@@ -203,6 +203,8 @@ EOF
 			AddPackage other sbwml luci-app-mosdns v5
    		rm -r ${WORK}/package/other/luci-app-mosdns/mosdns
 			patch < ${CustomFiles}/mt7981/0001-Add-iptables-socket.patch -p1 -d ${WORK}
+			rm -r ${WORK}/package/network/services/dnsmasq
+      Copy ${CustomFiles}/dnsmasq ${WORK}/package/network/services
 
       mosdns_version="5.3.1"
       wget --quiet --no-check-certificate -P /tmp \
@@ -211,6 +213,8 @@ EOF
       Copy /tmp/mosdns ${BASE_FILES}/usr/bin
       chmod +x ${BASE_FILES}/usr/bin
       sed -i "s?+mosdns ??g" ${WORK}/package/other/luci-app-mosdns/luci-app-mosdns/Makefile
+			rm -r ${WORK}/package/network/services/dnsmasq
+			Copy ${CustomFiles}/dnsmasq ${WORK}/package/network/services
 		;;
 		esac
 	;;
