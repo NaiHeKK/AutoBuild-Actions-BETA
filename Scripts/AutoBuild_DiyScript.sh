@@ -21,7 +21,7 @@ Firmware_Diy_Core() {
 	Default_Flag=AUTO
 	# 固件标签 (名称后缀), 适用不同配置文件, AUTO: [自动识别]
 	
-	Default_IP="10.0.0.1"
+	Default_IP="192.168.1.1"
 	# 固件 IP 地址
 	
 	Default_Title="Powered by AutoBuild-Actions"
@@ -97,9 +97,12 @@ EOF
 		# sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
 		# sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase="/luci-static/argon-mod"' $(PKG_Finder d package default-settings)/files/zzz-default-settings
 
+		rm -r ${FEEDS_LUCI}/luci-theme-argon*
 		AddPackage other vernesong OpenClash dev
+		AddPackage other jerrykuku luci-app-argon-config master
 		AddPackage other fw876 helloworld main
 		AddPackage other sbwml luci-app-mosdns v5
+		AddPackage themes jerrykuku luci-theme-argon 18.06
 		AddPackage themes thinktip luci-theme-neobird main
 		AddPackage msd_lite ximiTech luci-app-msd_lite main
 		AddPackage msd_lite ximiTech msd_lite main
@@ -127,10 +130,6 @@ EOF
 		case "${TARGET_PROFILE}" in
 		d-team_newifi-d2)
 			Copy ${CustomFiles}/${TARGET_PROFILE}_system ${BASE_FILES}/etc/config system
-			AddPackage passwall xiaorouji openwrt-passwall-packages main
-			AddPackage passwall xiaorouji openwrt-passwall main
-			AddPackage passwall xiaorouji openwrt-passwall2 main
-			rm -r ${WORK}/package/passwall/openwrt-passwall-packages/xray-core
 		;;
 		x86_64)
 			# sed -i "s?6.1?6.6?g" ${WORK}/target/linux/x86/Makefile
@@ -150,13 +149,6 @@ EOF
 		xiaomi_redmi-router-ax6s)
 			AddPackage passwall-depends xiaorouji openwrt-passwall-packages main
 			AddPackage passwall-luci xiaorouji openwrt-passwall main
-		;;
-    cmcc_rax3000m*)
-      AddPackage passwall xiaorouji openwrt-passwall-packages main
-      AddPackage passwall xiaorouji openwrt-passwall main
-      AddPackage passwall xiaorouji openwrt-passwall2 main
-      rm -r ${WORK}/package/other/helloworld/xray-core
-      rm -r ${WORK}/package/other/helloworld/xray-plugin
 		;;
 		esac
 	;;
@@ -189,32 +181,24 @@ EOF
 		;;
 		esac
 	;;
-	hanwckf/immortalwrt-mt798x* | padavanonly/immortalwrt-mt798x*)
+	hanwckf/immortalwrt-mt798x*)
 		case "${TARGET_PROFILE}" in
 		cmcc_rax3000m | jcg_q30)
-      AddPackage passwall xiaorouji openwrt-passwall main
-      AddPackage passwall xiaorouji openwrt-passwall2 main
-      rm -r ${FEEDS_LUCI}/luci-app-passwall
-      rm -r ${FEEDS_PKG}/xray-core
-      rm -r ${FEEDS_PKG}/xray-plugin
-
-      AddPackage other vernesong OpenClash dev
-
+			AddPackage passwall xiaorouji openwrt-passwall main
 			AddPackage other sbwml luci-app-mosdns v5
-   		rm -r ${WORK}/package/other/luci-app-mosdns/mosdns
+   			rm -r ${WORK}/package/other/luci-app-mosdns/mosdns
+			rm -r ${FEEDS_LUCI}/luci-app-passwall
 			patch < ${CustomFiles}/mt7981/0001-Add-iptables-socket.patch -p1 -d ${WORK}
 			rm -r ${WORK}/package/network/services/dnsmasq
-      Copy ${CustomFiles}/dnsmasq ${WORK}/package/network/services
-
-      mosdns_version="5.3.1"
-      wget --quiet --no-check-certificate -P /tmp \
-      	https://github.com/IrineSistiana/mosdns/releases/download/v${mosdns_version}/mosdns-linux-arm64.zip
-      unzip /tmp/mosdns-linux-arm64.zip -d /tmp
-      Copy /tmp/mosdns ${BASE_FILES}/usr/bin
-      chmod +x ${BASE_FILES}/usr/bin
-      sed -i "s?+mosdns ??g" ${WORK}/package/other/luci-app-mosdns/luci-app-mosdns/Makefile
-			rm -r ${WORK}/package/network/services/dnsmasq
 			Copy ${CustomFiles}/dnsmasq ${WORK}/package/network/services
+
+			mosdns_version="5.3.1"
+			wget --quiet --no-check-certificate -P /tmp \
+				https://github.com/IrineSistiana/mosdns/releases/download/v${mosdns_version}/mosdns-linux-arm64.zip
+			unzip /tmp/mosdns-linux-arm64.zip -d /tmp
+			Copy /tmp/mosdns ${BASE_FILES}/usr/bin
+			chmod +x ${BASE_FILES}/usr/bin
+			sed -i "s?+mosdns ??g" ${WORK}/package/other/luci-app-mosdns/luci-app-mosdns/Makefile
 		;;
 		esac
 	;;
