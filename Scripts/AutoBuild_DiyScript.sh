@@ -104,11 +104,11 @@ EOF
 		AddPackage msd_lite ximiTech luci-app-msd_lite main
 		AddPackage msd_lite ximiTech msd_lite main
 		AddPackage iptvhelper riverscn openwrt-iptvhelper master
-		rm -r ${WORK}/package/other/helloworld/mosdns
-		rm -r ${FEEDS_PKG}/mosdns
+		rm -rf ${WORK}/package/other/helloworld/mosdns
+		rm -rf ${FEEDS_PKG}/mosdns
 		rm -rf ${FEEDS_LUCI}/luci-app-mosdns
-		rm -r ${FEEDS_PKG}/curl
-		rm -r ${FEEDS_PKG}/msd_lite
+		rm -rf ${FEEDS_PKG}/curl
+		rm -rf ${FEEDS_PKG}/msd_lite
 		Copy ${CustomFiles}/curl ${FEEDS_PKG}
 		
 		case "${TARGET_BOARD}" in
