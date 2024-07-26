@@ -37,6 +37,18 @@ on:
         description: '添加Docker？'
         default: false
         type: boolean
+      LUCI_23:
+        description: 'luci改为23.05（LEDE默认为18）LEDE用？'
+        default: false
+        type: boolean
+      INCLUDE_KENZOK8:
+        description: '添加KENZOK8软件库 [可选]LEDE用'
+        default: ''
+        type: choice
+        options:
+          - ''
+          - 'openwrt-packages'
+          - 'small-package'
   ### 界面控制部分结束 ( 以上内容请保持不变 )
 
   ## Git Push 时触发编译(不要删除此行注释)
@@ -189,6 +201,16 @@ jobs:
             echo "CONFIG_FILE: [/Config/$CONFIG_FILE]"
             echo "CONFIG_FILE=$CONFIG_FILE" >> $GITHUB_ENV
         fi
+        if [ -n "${{ github.event.inputs.LUCI_23 }}" ]
+        then
+            echo "LUCI_23: [${{ github.event.inputs.LUCI_23 }}]"
+            echo "LUCI_23=${{ github.event.inputs.LUCI_23 }}" >> $GITHUB_ENV
+        fi
+        if [ -n "${{ github.event.inputs.INCLUDE_KENZOK8 }}" ]
+        then
+            echo "INCLUDE_KENZOK8: [${{ github.event.inputs.INCLUDE_KENZOK8 }}]"
+            echo "INCLUDE_KENZOK8=${{ github.event.inputs.INCLUDE_KENZOK8 }}" >> $GITHUB_ENV
+        fi
         REPO_URL="https://github.com/$(cut -d \: -f 1 <<< $DEFAULT_SOURCE)"
         REPO_BRANCH=$(cut -d \: -f 2 <<< $DEFAULT_SOURCE)
         echo "REPO_URL=$REPO_URL" >> $GITHUB_ENV
@@ -214,11 +236,34 @@ jobs:
         git clone -b $REPO_BRANCH $REPO_URL openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
         cd openwrt
-        sed -i 's|src-git luci https://github.com/coolsnowwolf/luci|src-git luci https://github.com/coolsnowwolf/luci.git;openwrt-23.05|' feeds.conf.default
-        sed -i '$a src-git kenzo https://github.com/kenzok8/openwrt-packages' feeds.conf.default
-        sed -i '$a src-git small https://github.com/kenzok8/small' feeds.conf.default
+        if [ "${{ env.DEFAULT_SOURCE }}" == "coolsnowwolf/lede:master" ]
+        then
+            echo "LEDE"
+            if [ "${{ env.LUCI_23 }}" == true ]
+            then
+                echo "LUCI_23"
+                sed -i 's|src-git luci https://github.com/coolsnowwolf/luci|src-git luci https://github.com/coolsnowwolf/luci.git;openwrt-23.05|' feeds.conf.default
+            fi
+            if [ "${{ env.INCLUDE_KENZOK8 }}" == "openwrt-packages" ]
+            then
+                echo "INCLUDE_KENZOK8 openwrt-packages"
+                sed -i '$a src-git kenzo https://github.com/kenzok8/openwrt-packages' feeds.conf.default
+                sed -i '$a src-git small https://github.com/kenzok8/small' feeds.conf.default
+            elif [ "${{ env.INCLUDE_KENZOK8 }}" == "small-package" ]
+            then
+                echo "INCLUDE_KENZOK8 small-package"
+                sed -i '$a src-git smpackage https://github.com/kenzok8/small-package' feeds.conf.default
+            fi
+        fi
         ./scripts/feeds update -a
         ./scripts/feeds install -a
+        if [ "${{ env.DEFAULT_SOURCE }}" == "coolsnowwolf/lede:master" ]
+        then
+            if [ "${{ env.INCLUDE_KENZOK8 }}" == "small-package" ]
+            then
+                rm -rf feeds/smpackage/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd*,miniupnpd-iptables,wireless-regdb}
+            fi
+        fi
 
     - name: REPLACE TO 256M
       run: |
