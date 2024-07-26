@@ -106,7 +106,7 @@ EOF
 		AddPackage iptvhelper riverscn openwrt-iptvhelper master
 		rm -r ${WORK}/package/other/helloworld/mosdns
 		rm -r ${FEEDS_PKG}/mosdns
-		rm -r ${FEEDS_LUCI}/luci-app-mosdns
+		rm -rf ${FEEDS_LUCI}/luci-app-mosdns
 		rm -r ${FEEDS_PKG}/curl
 		rm -r ${FEEDS_PKG}/msd_lite
 		Copy ${CustomFiles}/curl ${FEEDS_PKG}
