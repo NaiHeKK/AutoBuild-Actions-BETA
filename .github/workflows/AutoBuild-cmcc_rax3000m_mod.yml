@@ -42,7 +42,7 @@ on:
         default: false
         type: boolean
       INCLUDE_KENZOK8:
-        description: '添加KENZOK8软件库 [可选]LEDE用'
+        description: '添加KENZOK8软件库 [可选]'
         default: ''
         type: choice
         options:
