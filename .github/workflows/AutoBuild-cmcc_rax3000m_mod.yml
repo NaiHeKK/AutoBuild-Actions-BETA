@@ -268,6 +268,7 @@ jobs:
                 rm -rf feeds/feeds/kenzo/{luci-app-quickstart,luci-app-store,luci-lib-taskd,homeproxy,luci-app-homeproxy}
             fi
         fi
+        rm -rf feeds/small/luci-app-mosdns
 
     - name: REPLACE TO 256M
       run: |
