@@ -97,12 +97,9 @@ EOF
 		# sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
 		# sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase="/luci-static/argon-mod"' $(PKG_Finder d package default-settings)/files/zzz-default-settings
 
-		rm -rf ${FEEDS_LUCI}/luci-theme-argon*
 		AddPackage other vernesong OpenClash dev
-		AddPackage other jerrykuku luci-app-argon-config master
 		AddPackage other fw876 helloworld main
 		AddPackage other sbwml luci-app-mosdns v5-lua
-		AddPackage themes jerrykuku luci-theme-argon 18.06
 		AddPackage themes thinktip luci-theme-neobird main
 		AddPackage msd_lite ximiTech luci-app-msd_lite main
 		AddPackage msd_lite ximiTech msd_lite main
@@ -113,6 +110,18 @@ EOF
 		rm -rf ${FEEDS_PKG}/curl
 		rm -rf ${FEEDS_PKG}/msd_lite
 		Copy ${CustomFiles}/curl ${FEEDS_PKG}
+
+		case "${TARGET_PROFILE}" in
+		cmcc_rax3000m*)
+		  echo "cmcc_rax3000"
+    	;;
+    *)
+      echo "other"
+    	rm -rf ${FEEDS_LUCI}/luci-theme-argon*
+    	AddPackage themes jerrykuku luci-theme-argon 18.06
+    	AddPackage other jerrykuku luci-app-argon-config master
+    	;;
+    esac
 		
 		case "${TARGET_BOARD}" in
 		ramips)
