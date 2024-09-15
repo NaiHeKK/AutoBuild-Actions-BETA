@@ -97,12 +97,12 @@ EOF
 		# sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
 		# sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase="/luci-static/argon-mod"' $(PKG_Finder d package default-settings)/files/zzz-default-settings
 
-                rm -rf ${FEEDS_LUCI}/luci-theme-argon*
+		rm -rf ${FEEDS_LUCI}/luci-theme-argon*
 		AddPackage other vernesong OpenClash dev
-                AddPackage other jerrykuku luci-app-argon-config master
+		AddPackage other jerrykuku luci-app-argon-config master
 		AddPackage other fw876 helloworld main
 		AddPackage other sbwml luci-app-mosdns v5-lua
-                AddPackage themes jerrykuku luci-theme-argon 18.06
+		AddPackage themes jerrykuku luci-theme-argon 18.06
 		AddPackage themes thinktip luci-theme-neobird main
 		AddPackage msd_lite ximiTech luci-app-msd_lite main
 		AddPackage msd_lite ximiTech msd_lite main
@@ -154,14 +154,14 @@ EOF
 			AddPackage passwall-depends xiaorouji openwrt-passwall-packages main
 			AddPackage passwall-luci xiaorouji openwrt-passwall main
 		;;
-    cmcc_rax3000m*)
-      AddPackage passwall xiaorouji openwrt-passwall-packages main
-      AddPackage passwall xiaorouji openwrt-passwall main
-      AddPackage passwall xiaorouji openwrt-passwall2 main
-      rm -r ${WORK}/package/other/helloworld/xray-core
-      rm -r ${WORK}/package/other/helloworld/xray-plugin
-      rm -r ${WORK}/package/network/services/dnsmasq
-      Copy ${CustomFiles}/dnsmasq ${WORK}/package/network/services
+		cmcc_rax3000m*)
+			AddPackage passwall xiaorouji openwrt-passwall-packages main
+			AddPackage passwall xiaorouji openwrt-passwall main
+			AddPackage passwall xiaorouji openwrt-passwall2 main
+			rm -r ${WORK}/package/other/helloworld/xray-core
+			rm -r ${WORK}/package/other/helloworld/xray-plugin
+			rm -r ${WORK}/package/network/services/dnsmasq
+			Copy ${CustomFiles}/dnsmasq ${WORK}/package/network/services
 		;;
 		esac
 	;;
@@ -197,19 +197,19 @@ EOF
 	hanwckf/immortalwrt-mt798x* | padavanonly/immortalwrt-mt798x*)
 		case "${TARGET_PROFILE}" in
 		cmcc_rax3000m | jcg_q30)
-      AddPackage passwall xiaorouji openwrt-passwall main
-      AddPackage passwall xiaorouji openwrt-passwall2 main
-      rm -r ${FEEDS_LUCI}/luci-app-passwall
-      rm -r ${FEEDS_PKG}/xray-core
-      rm -r ${FEEDS_PKG}/xray-plugin
+			AddPackage passwall xiaorouji openwrt-passwall main
+			AddPackage passwall xiaorouji openwrt-passwall2 main
+			rm -r ${FEEDS_LUCI}/luci-app-passwall
+			rm -r ${FEEDS_PKG}/xray-core
+			rm -r ${FEEDS_PKG}/xray-plugin
 
-      AddPackage other vernesong OpenClash dev
+			AddPackage other vernesong OpenClash dev
 
 			AddPackage other sbwml luci-app-mosdns v5
-   		rm -r ${WORK}/package/other/luci-app-mosdns/mosdns
+			rm -r ${WORK}/package/other/luci-app-mosdns/mosdns
 			patch < ${CustomFiles}/mt7981/0001-Add-iptables-socket.patch -p1 -d ${WORK}
 			rm -r ${WORK}/package/network/services/dnsmasq
-      Copy ${CustomFiles}/dnsmasq ${WORK}/package/network/services
+			Copy ${CustomFiles}/dnsmasq ${WORK}/package/network/services
 
 			mosdns_version="5.3.3"
 			wget --quiet --no-check-certificate -P /tmp \
