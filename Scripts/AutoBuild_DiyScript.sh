@@ -110,9 +110,7 @@ EOF
 		rm -rf ${WORK}/package/other/helloworld/mosdns
 		rm -rf ${FEEDS_PKG}/mosdns
 		rm -rf ${FEEDS_LUCI}/luci-app-mosdns
-		rm -rf ${FEEDS_PKG}/curl
 		rm -rf ${FEEDS_PKG}/msd_lite
-		Copy ${CustomFiles}/curl ${FEEDS_PKG}
 		
 		case "${TARGET_BOARD}" in
 		ramips)
@@ -160,8 +158,6 @@ EOF
 			AddPackage passwall xiaorouji openwrt-passwall2 main
 			rm -r ${WORK}/package/other/helloworld/xray-core
 			rm -r ${WORK}/package/other/helloworld/xray-plugin
-			rm -r ${WORK}/package/network/services/dnsmasq
-			Copy ${CustomFiles}/dnsmasq ${WORK}/package/network/services
 		;;
 		esac
 	;;
@@ -179,7 +175,6 @@ EOF
 				rm -r ${FEEDS_PKG}/xray-plugin
 				AddPackage other sbwml luci-app-mosdns v5
 				rm -r ${WORK}/package/other/luci-app-mosdns/mosdns
-				patch < ${CustomFiles}/mt7981/0001-Add-iptables-socket.patch -p1 -d ${WORK}
 				Copy ${CustomFiles}/speedtest ${BASE_FILES}/usr/bin
 				chmod +x ${BASE_FILES}/usr/bin/speedtest
 			;;
@@ -207,9 +202,6 @@ EOF
 
 			AddPackage other sbwml luci-app-mosdns v5
 			rm -r ${WORK}/package/other/luci-app-mosdns/mosdns
-			patch < ${CustomFiles}/mt7981/0001-Add-iptables-socket.patch -p1 -d ${WORK}
-			rm -r ${WORK}/package/network/services/dnsmasq
-			Copy ${CustomFiles}/dnsmasq ${WORK}/package/network/services
 
 			mosdns_version="5.3.3"
 			wget --quiet --no-check-certificate -P /tmp \
