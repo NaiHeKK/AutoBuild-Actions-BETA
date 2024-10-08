@@ -29,6 +29,7 @@ on:
           - 'hanwckf/immortalwrt-mt798x:openwrt-21.02'
           - 'padavanonly/immortalwrt-mt798x:openwrt-21.02'
           - 'coolsnowwolf/lede:master'
+          - 'immortalwrt/immortalwrt:master'
       Testing_KERNEL:
         description: '启用测试版内核？'
         default: false
@@ -192,6 +193,11 @@ jobs:
             echo "Tempoary_FLAG=padavanonly" >> $GITHUB_ENV
             CONFIG_FILE=${{ env.CONFIG_FILE }}_PADA
             echo "padavanonly"
+        elif [[ "$DEFAULT_SOURCE" =~ "immortalwrt" ]]
+        then
+            echo "Tempoary_FLAG=immortalwrt" >> $GITHUB_ENV
+            CONFIG_FILE=${{ env.CONFIG_FILE }}_IMM
+            echo "immortalwrt"
         fi
         if [ ! -f "$GITHUB_WORKSPACE/Configs/$CONFIG_FILE" ]
         then
@@ -276,7 +282,7 @@ jobs:
             cd openwrt
             echo "CONFIG_FILE: $CONFIG_FILE"
             echo "Tempoary_FLAG: $Tempoary_FLAG"
-            if [ "${{ env.DEFAULT_SOURCE }}" == "coolsnowwolf/lede:master" ]
+            if [[ "${{ env.DEFAULT_SOURCE }}" == "coolsnowwolf/lede:master" || "${{ env.DEFAULT_SOURCE }}" == "immortalwrt/immortalwrt:master"]]
             then
                 sed -i 's/<0x580000 0x7200000>/<0x580000 0xee00000>/g' target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-nand.dts
                 sed -i 's/116736k/243712k/g' target/linux/mediatek/image/filogic.mk
