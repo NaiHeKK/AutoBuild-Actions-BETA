@@ -268,7 +268,7 @@ jobs:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: openwrt/bin/Firmware/*
         file_glob: true
-        tag: AutoUpdate
+        tag: x86_64
         overwrite: true
         
     - name: Refresh API (1/2)
@@ -283,7 +283,7 @@ jobs:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: ./API
         file_glob: true
-        tag: AutoUpdate
+        tag: x86_64
         overwrite: true
 
     - name: Delete old Workflow Runs

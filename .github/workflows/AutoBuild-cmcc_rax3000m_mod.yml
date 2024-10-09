@@ -183,6 +183,10 @@ jobs:
             echo "Tempoary_FLAG=LEDE" >> $GITHUB_ENV
             CONFIG_FILE=${{ env.CONFIG_FILE }}_LEDE
             echo "LEDE"
+            if [ -n "${{ github.event.inputs.LUCI_23 }}" ]
+            then
+                CONFIG_FILE=${{ env.CONFIG_FILE }}_LEDE_2305
+            fi
         elif [[ "$DEFAULT_SOURCE" =~ "hanwckf" ]]
         then
             echo "Tempoary_FLAG=hanwckf" >> $GITHUB_ENV
@@ -391,7 +395,7 @@ jobs:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: openwrt/bin/Firmware/*
         file_glob: true
-        tag: AutoUpdate
+        tag: RAX3000M
         overwrite: true
 
     - name: Download Github API
@@ -406,7 +410,7 @@ jobs:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: ./API
         file_glob: true
-        tag: AutoUpdate
+        tag: RAX3000M
         overwrite: true
 
     - name: Delete old Workflow Runs
