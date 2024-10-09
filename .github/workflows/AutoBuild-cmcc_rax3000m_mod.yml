@@ -183,7 +183,7 @@ jobs:
             echo "Tempoary_FLAG=LEDE" >> $GITHUB_ENV
             CONFIG_FILE=${{ env.CONFIG_FILE }}_LEDE
             echo "LEDE"
-            if [ -n "${{ github.event.inputs.LUCI_23 }}" ]
+            if [ "${{ github.event.inputs.LUCI_23 }}" == "true" ]
             then
                 CONFIG_FILE=${{ env.CONFIG_FILE }}_LEDE_2305
             fi
