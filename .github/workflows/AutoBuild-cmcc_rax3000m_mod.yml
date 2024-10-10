@@ -302,6 +302,7 @@ jobs:
             then
                 echo "immortalwrt"
                 sed -i 's/<0x580000 0x7200000>/<0x580000 0xee00000>/g' target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-nand.dtso
+                sed -i 's/<0x580000 0x7200000>/<0x580000 0xee00000>/g' package/boot/uboot-mediatek/patches/437-add-cmcc_rax3000m.patch
             else
                 echo "Other"
                 sed -i 's/<0x580000 0x7200000>/<0x580000 0xee00000>/g' target/linux/mediatek/files-5.4/arch/arm64/boot/dts/mediatek/mt7981-cmcc-rax3000m.dts
