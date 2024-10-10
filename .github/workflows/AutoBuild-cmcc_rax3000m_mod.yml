@@ -84,6 +84,8 @@ env:
   DELETE_OLD_WORKFLOW: false
 # Cache 加速编译
   CACHE_ACCELERATE: false
+# RELEASE_TAG_NAME
+  RELEASE_TAG_NAME: RAX3000M
 ### 结束
 ### 请按需求修改以上内容
 
@@ -156,7 +158,6 @@ jobs:
             echo "CONFIG_FILE: [/Config/$CONFIG_FILE]"
             echo "CONFIG_FILE=$CONFIG_FILE" >> $GITHUB_ENV
         fi
-        RELEASE_TAG_NAME=RAX3000M
         if [ -n "${{ github.event.inputs.Tempoary_IP }}" ]
         then
             echo "IP: [${{ github.event.inputs.Tempoary_IP }}]"
