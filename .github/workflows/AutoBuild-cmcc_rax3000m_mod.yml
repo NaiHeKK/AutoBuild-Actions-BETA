@@ -403,7 +403,7 @@ jobs:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: openwrt/bin/Firmware/*
         file_glob: true
-        tag: ${{ env.RELEASE_TAG_NAME }}
+        tag: ${{ env.RELEASE_TAG_NAME }}_${{ env.Compile_Date }}
         overwrite: true
 
     - name: Upload Firmware to Release AutoUpdate
