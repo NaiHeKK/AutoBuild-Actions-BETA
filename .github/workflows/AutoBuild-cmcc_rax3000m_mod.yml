@@ -156,6 +156,7 @@ jobs:
             echo "CONFIG_FILE: [/Config/$CONFIG_FILE]"
             echo "CONFIG_FILE=$CONFIG_FILE" >> $GITHUB_ENV
         fi
+        RELEASE_TAG_NAME=RAX3000M
         if [ -n "${{ github.event.inputs.Tempoary_IP }}" ]
         then
             echo "IP: [${{ github.event.inputs.Tempoary_IP }}]"
@@ -182,25 +183,30 @@ jobs:
         then
             echo "Tempoary_FLAG=LEDE" >> $GITHUB_ENV
             CONFIG_FILE=${{ env.CONFIG_FILE }}_LEDE
+            RELEASE_TAG_NAME=${{ RELEASE_TAG_NAME }}_LEDE
             echo "LEDE"
             if [ "${{ github.event.inputs.LUCI_23 }}" == "true" ]
             then
                 CONFIG_FILE=${{ env.CONFIG_FILE }}_LEDE_2305
+                RELEASE_TAG_NAME=${{ RELEASE_TAG_NAME }}_2305
             fi
         elif [[ "$DEFAULT_SOURCE" =~ "hanwckf" ]]
         then
             echo "Tempoary_FLAG=hanwckf" >> $GITHUB_ENV
             CONFIG_FILE=${{ env.CONFIG_FILE }}
+            RELEASE_TAG_NAME=${{ RELEASE_TAG_NAME }}_HANW
             echo "hanwckf"
         elif [[ "$DEFAULT_SOURCE" =~ "padavanonly" ]]
         then
             echo "Tempoary_FLAG=padavanonly" >> $GITHUB_ENV
             CONFIG_FILE=${{ env.CONFIG_FILE }}_PADA
+            RELEASE_TAG_NAME=${{ RELEASE_TAG_NAME }}_PADA
             echo "padavanonly"
         elif [[ "$DEFAULT_SOURCE" =~ "immortalwrt" ]]
         then
             echo "Tempoary_FLAG=immortalwrt" >> $GITHUB_ENV
             CONFIG_FILE=${{ env.CONFIG_FILE }}_IMM
+            RELEASE_TAG_NAME=${{ RELEASE_TAG_NAME }}_IMM
             echo "immortalwrt"
         fi
         if [ ! -f "$GITHUB_WORKSPACE/Configs/$CONFIG_FILE" ]
@@ -221,6 +227,7 @@ jobs:
             echo "INCLUDE_KENZOK8: [${{ github.event.inputs.INCLUDE_KENZOK8 }}]"
             echo "INCLUDE_KENZOK8=${{ github.event.inputs.INCLUDE_KENZOK8 }}" >> $GITHUB_ENV
         fi
+        echo "RELEASE_TAG_NAME=RELEASE_TAG_NAME" >> $GITHUB_ENV
         REPO_URL="https://github.com/$(cut -d \: -f 1 <<< $DEFAULT_SOURCE)"
         REPO_BRANCH=$(cut -d \: -f 2 <<< $DEFAULT_SOURCE)
         echo "REPO_URL=$REPO_URL" >> $GITHUB_ENV
@@ -396,7 +403,7 @@ jobs:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: openwrt/bin/Firmware/*
         file_glob: true
-        tag: RAX3000M_${{ env.Compile_Date }}
+        tag: ${{ env.RELEASE_TAG_NAME }}
         overwrite: true
 
     - name: Upload Firmware to Release AutoUpdate
