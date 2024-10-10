@@ -396,7 +396,7 @@ jobs:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: openwrt/bin/Firmware/*
         file_glob: true
-        tag: RAX3000M
+        tag: RAX3000M_${{ env.Compile_Date }}
         overwrite: true
 
     - name: Download Github API
@@ -411,7 +411,7 @@ jobs:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: ./API
         file_glob: true
-        tag: RAX3000M
+        tag: AutoUpdate
         overwrite: true
 
     - name: Delete old Workflow Runs
