@@ -180,6 +180,7 @@ jobs:
             echo "SOURCE: [${{ github.event.inputs.Tempoary_SOURCE }}]"
             echo "DEFAULT_SOURCE: $DEFAULT_SOURCE"
         fi
+        RELEASE_TAG_NAME=${{ env.RELEASE_TAG_NAME }}
         if [[ "$DEFAULT_SOURCE" =~ "lede" ]]
         then
             echo "Tempoary_FLAG=LEDE" >> $GITHUB_ENV
