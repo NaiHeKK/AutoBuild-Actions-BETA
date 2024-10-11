@@ -74,14 +74,13 @@ Firmware_Diy() {
 	# Copy <cp_from> <cp_to > <rename>
 	# merge_package <git_branch> <git_repo_url> <package_path> <target_path>..
 
-  echo "LUCI_23: ${LUCI_23}"
 	# 通用插件
 	## luci-app-ddns-go
 	rm -rf ${FEEDS_LUCI}/luci-app-ddns-go
 	rm -rf ${FEEDS_PKG}/ddns-go
 	AddPackage ddns-go sirpdboy luci-app-ddns-go main
 	## luci-app-advancedplus
-	AddPackage themes sirpdboy luci-app-advancedplus main
+	AddPackage other sirpdboy luci-app-advancedplus main
 	## luci-app-lucky
 	AddPackage other sirpdboy luci-app-lucky main
 	## OpenClash
@@ -114,7 +113,14 @@ EOF
 		AddPackage other jerrykuku luci-app-argon-config master
 		AddPackage other fw876 helloworld main
 		AddPackage other sbwml luci-app-mosdns v5-lua
-		AddPackage themes sirpdboy luci-theme-kucat main
+		if [[ ${LUCI_23} == true ]]
+	  then
+	    echo "luci-theme-kucat: js"
+			AddPackage themes sirpdboy luci-theme-kucat js
+		else
+		  echo "luci-theme-kucat: main"
+		  AddPackage themes sirpdboy luci-theme-kucat main
+		fi
 		AddPackage themes jerrykuku luci-theme-argon 18.06
 		AddPackage themes thinktip luci-theme-neobird main
 		AddPackage msd_lite ximiTech luci-app-msd_lite main
