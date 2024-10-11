@@ -73,7 +73,19 @@ Firmware_Diy() {
 	# ReleaseDL <release_url> <file> <target_path>
 	# Copy <cp_from> <cp_to > <rename>
 	# merge_package <git_branch> <git_repo_url> <package_path> <target_path>..
-	
+
+	# 通用插件
+	## luci-app-ddns-go
+	rm -rf ${FEEDS_LUCI}/luci-app-ddns-go
+	rm -rf ${FEEDS_PKG}/ddns-go
+	AddPackage ddns-go sirpdboy luci-app-ddns-go main
+	## luci-app-advancedplus
+	AddPackage themes sirpdboy luci-app-advancedplus main
+	## luci-app-lucky
+	AddPackage other sirpdboy luci-app-lucky main
+	## OpenClash
+	AddPackage other vernesong OpenClash dev
+
 	case "${OP_AUTHOR}/${OP_REPO}:${OP_BRANCH}" in
 	coolsnowwolf/lede:master)
 		cat >> ${Version_File} <<EOF
@@ -98,13 +110,10 @@ EOF
 		# sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase="/luci-static/argon-mod"' $(PKG_Finder d package default-settings)/files/zzz-default-settings
 
 		rm -rf ${FEEDS_LUCI}/luci-theme-argon*
-		rm -rf ${FEEDS_LUCI}/luci-app-ddns-go
-		rm -rf ${FEEDS_PKG}/ddns-go
-		AddPackage other vernesong OpenClash dev
-		AddPackage ddns-go sirpdboy luci-app-ddns-go main
 		AddPackage other jerrykuku luci-app-argon-config master
 		AddPackage other fw876 helloworld main
 		AddPackage other sbwml luci-app-mosdns v5-lua
+		AddPackage themes sirpdboy luci-theme-kucat main
 		AddPackage themes jerrykuku luci-theme-argon 18.06
 		AddPackage themes thinktip luci-theme-neobird main
 		AddPackage msd_lite ximiTech luci-app-msd_lite main
@@ -165,6 +174,7 @@ EOF
 		esac
 	;;
 	immortalwrt/immortalwrt*)
+	  AddPackage themes sirpdboy luci-theme-kucat js
 		case "${TARGET_PROFILE}" in
 		x86_64)
 			sed -i -- 's:/bin/ash:'/bin/bash':g' ${BASE_FILES}/etc/passwd
@@ -186,6 +196,7 @@ EOF
 		esac
 	;;
 	padavanonly/immortalwrtARM*)
+	  AddPackage themes sirpdboy luci-theme-kucat main
 		case "${TARGET_PROFILE}" in
 		xiaomi_redmi-router-ax6s)
 			:
@@ -193,6 +204,7 @@ EOF
 		esac
 	;;
 	hanwckf/immortalwrt-mt798x* | padavanonly/immortalwrt-mt798x*)
+	  AddPackage themes sirpdboy luci-theme-kucat main
 		case "${TARGET_PROFILE}" in
 		cmcc_rax3000m | jcg_q30)
 			AddPackage passwall xiaorouji openwrt-passwall main
@@ -200,8 +212,6 @@ EOF
 			rm -r ${FEEDS_LUCI}/luci-app-passwall
 			rm -r ${FEEDS_PKG}/xray-core
 			rm -r ${FEEDS_PKG}/xray-plugin
-
-			AddPackage other vernesong OpenClash dev
 
 			AddPackage other sbwml luci-app-mosdns v5
 			rm -r ${WORK}/package/other/luci-app-mosdns/mosdns
