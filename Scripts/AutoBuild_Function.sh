@@ -91,7 +91,12 @@ Firmware_Diy_Start() {
 		AutoBuild_Fw="AutoBuild-${OP_REPO}-${TARGET_PROFILE}-${OP_VERSION}-BOOT-${TARGET_FLAG}-SHA256.FORMAT"
 	;;
 	*)
-		AutoBuild_Fw="AutoBuild-${OP_REPO}-${TARGET_PROFILE}-${OP_VERSION}-${TARGET_FLAG}-SHA256.FORMAT"
+	  if [[ ${LUCI_23} == true ]]
+	  then
+	    AutoBuild_Fw="AutoBuild-${OP_REPO}2305-${TARGET_PROFILE}-${OP_VERSION}-${TARGET_FLAG}-SHA256.FORMAT"
+		else
+		  AutoBuild_Fw="AutoBuild-${OP_REPO}-${TARGET_PROFILE}-${OP_VERSION}-${TARGET_FLAG}-SHA256.FORMAT"
+		fi
 	;;
 	esac
 	cat >> ${GITHUB_ENV} <<EOF
