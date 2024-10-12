@@ -112,14 +112,15 @@ EOF
 		rm -rf ${FEEDS_LUCI}/luci-theme-argon*
 		AddPackage other jerrykuku luci-app-argon-config master
 		AddPackage other fw876 helloworld main
-		AddPackage other sbwml luci-app-mosdns v5-lua
 		if [[ ${LUCI_23} == true ]]
 	  then
 	    echo "luci-theme-kucat: js"
 			AddPackage themes sirpdboy luci-theme-kucat js
+			AddPackage other sbwml luci-app-mosdns v5
 		else
 		  echo "luci-theme-kucat: main"
 		  AddPackage themes sirpdboy luci-theme-kucat main
+		  AddPackage other sbwml luci-app-mosdns v5-lua
 		fi
 		AddPackage themes jerrykuku luci-theme-argon 18.06
 		AddPackage themes thinktip luci-theme-neobird main
