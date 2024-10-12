@@ -117,6 +117,7 @@ EOF
 	    echo "luci-theme-kucat: js"
 			AddPackage themes sirpdboy luci-theme-kucat js
 			AddPackage other sbwml luci-app-mosdns v5
+			AddPackage other morytyann OpenWrt-mihomo main
 		else
 		  echo "luci-theme-kucat: main"
 		  AddPackage themes sirpdboy luci-theme-kucat main
@@ -182,6 +183,7 @@ EOF
 		esac
 	;;
 	immortalwrt/immortalwrt*)
+	  AddPackage other morytyann OpenWrt-mihomo main
 	  AddPackage themes sirpdboy luci-theme-kucat js
 		case "${TARGET_PROFILE}" in
 		x86_64)
