@@ -534,10 +534,9 @@ AddPackageSubdir() {
   do
     echo "${arg}" >> .git/info/sparse-checkout
   done
-  cat .git/info/sparse-checkout
 	git remote add origin ${REPO_URL}
 	git pull origin ${REPO_BRANCH}
-	ls -R
+	ls
 }
 
 Copy() {
