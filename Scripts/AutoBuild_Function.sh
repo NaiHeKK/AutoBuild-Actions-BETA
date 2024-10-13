@@ -91,11 +91,11 @@ Firmware_Diy_Start() {
 		AutoBuild_Fw="AutoBuild-${OP_REPO}-${TARGET_PROFILE}-${OP_VERSION}-BOOT-${TARGET_FLAG}-SHA256.FORMAT"
 	;;
 	*)
-	  if [[ ${LUCI_23} == true ]]
-	  then
-	    AutoBuild_Fw="AutoBuild-${OP_REPO}2305-${TARGET_PROFILE}-${OP_VERSION}-${TARGET_FLAG}-SHA256.FORMAT"
+		if [[ ${LUCI_23} == true ]]
+		then
+			AutoBuild_Fw="AutoBuild-${OP_REPO}2305-${TARGET_PROFILE}-${OP_VERSION}-${TARGET_FLAG}-SHA256.FORMAT"
 		else
-		  AutoBuild_Fw="AutoBuild-${OP_REPO}-${TARGET_PROFILE}-${OP_VERSION}-${TARGET_FLAG}-SHA256.FORMAT"
+			AutoBuild_Fw="AutoBuild-${OP_REPO}-${TARGET_PROFILE}-${OP_VERSION}-${TARGET_FLAG}-SHA256.FORMAT"
 		fi
 	;;
 	esac
@@ -163,7 +163,7 @@ EOF
 		Copy ${CustomFiles}/Depends/base-files-essential ${BASE_FILES}/lib/upgrade/keep.d
 		case "${OP_AUTHOR}/${OP_REPO}" in
 		coolsnowwolf/lede)
-                        Copy ${CustomFiles}/Depends/coremark.sh $(PKG_Finder d feeds/packages coremark)
+			Copy ${CustomFiles}/Depends/coremark.sh $(PKG_Finder d feeds/packages coremark)
 			sed -i '\/etc\/firewall.user/d;/exit 0/d' ${Version_File}
 			if [[ -n ${TARGET_FLAG} ]]
 			then
@@ -531,9 +531,9 @@ AddPackageSubdir() {
 	cd ${PKG_NAME}
 	git config core.sparsecheckout true
 	for arg in "${@:5}"
-  do
-    echo "${arg}" >> .git/info/sparse-checkout
-  done
+	do
+		echo "${arg}" >> .git/info/sparse-checkout
+	done
 	git remote add origin ${REPO_URL}
 	git pull origin ${REPO_BRANCH}
 	ls
@@ -597,7 +597,7 @@ ReleaseDL() {
 			then
 				# echo $browser_download_url
 				[[ ${TARGET_FILE_RENAME} ]] && _FILE=${TARGET_FILE_RENAME} || _FILE=${FILE_NAME}
-    				ECHO "Downloading link ${browser_download_url} ..."
+						ECHO "Downloading link ${browser_download_url} ..."
 				wget --quiet --no-check-certificate \
 					--tries 5 --timeout 20 \
 					${browser_download_url} \

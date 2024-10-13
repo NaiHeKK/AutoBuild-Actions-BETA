@@ -113,8 +113,8 @@ EOF
 		AddPackage other jerrykuku luci-app-argon-config master
 		AddPackage other fw876 helloworld main
 		if [[ ${LUCI_23} == true ]]
-	  then
-	    echo "luci-theme-kucat: js"
+		then
+			echo "luci-theme-kucat: js"
 			AddPackage themes sirpdboy luci-theme-kucat js
 			AddPackage other sbwml luci-app-mosdns v5
 			AddPackage other morytyann OpenWrt-mihomo main
@@ -122,11 +122,11 @@ EOF
 			AddPackageSubdir other kenzok8 jell main frp/* *-frp*/*
 			rm -rf ${FEEDS_LUCI}/luci-app-frpc
 			rm -rf ${FEEDS_LUCI}/luci-app-frps
-	    rm -rf ${FEEDS_PKG}/frp
+			rm -rf ${FEEDS_PKG}/frp
 		else
-		  echo "luci-theme-kucat: main"
-		  AddPackage themes sirpdboy luci-theme-kucat main
-		  AddPackage other sbwml luci-app-mosdns v5-lua
+			echo "luci-theme-kucat: main"
+			AddPackage themes sirpdboy luci-theme-kucat main
+			AddPackage other sbwml luci-app-mosdns v5-lua
 		fi
 		AddPackage themes jerrykuku luci-theme-argon 18.06
 		AddPackage themes thinktip luci-theme-neobird main
@@ -188,8 +188,13 @@ EOF
 		esac
 	;;
 	immortalwrt/immortalwrt*)
-	  AddPackage other morytyann OpenWrt-mihomo main
-	  AddPackage themes sirpdboy luci-theme-kucat js
+		AddPackage other morytyann OpenWrt-mihomo main
+		AddPackage themes sirpdboy luci-theme-kucat js
+		# frps frpc
+		AddPackageSubdir other kenzok8 jell main frp/* *-frp*/*
+		rm -rf ${FEEDS_LUCI}/luci-app-frpc
+		rm -rf ${FEEDS_LUCI}/luci-app-frps
+		rm -rf ${FEEDS_PKG}/frp
 		case "${TARGET_PROFILE}" in
 		x86_64)
 			sed -i -- 's:/bin/ash:'/bin/bash':g' ${BASE_FILES}/etc/passwd
@@ -211,7 +216,7 @@ EOF
 		esac
 	;;
 	padavanonly/immortalwrtARM*)
-	  AddPackage themes sirpdboy luci-theme-kucat main
+		AddPackage themes sirpdboy luci-theme-kucat main
 		case "${TARGET_PROFILE}" in
 		xiaomi_redmi-router-ax6s)
 			:
@@ -219,7 +224,7 @@ EOF
 		esac
 	;;
 	hanwckf/immortalwrt-mt798x* | padavanonly/immortalwrt-mt798x*)
-	  AddPackage themes sirpdboy luci-theme-kucat main
+		AddPackage themes sirpdboy luci-theme-kucat main
 		case "${TARGET_PROFILE}" in
 		cmcc_rax3000m | jcg_q30)
 			AddPackage passwall xiaorouji openwrt-passwall main
