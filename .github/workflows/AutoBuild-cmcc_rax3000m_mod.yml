@@ -331,7 +331,6 @@ jobs:
 
     - name: Run Diy Scripts
       run: |
-        shopt -s extglob
         echo "Free space:"
         df -h
         chmod +x Scripts/AutoBuild_*.sh
