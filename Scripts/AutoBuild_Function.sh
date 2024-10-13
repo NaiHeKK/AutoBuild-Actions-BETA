@@ -502,7 +502,8 @@ AddPackage() {
 	git clone --depth 1 -b ${REPO_BRANCH} ${REPO_URL} ${PKG_DIR}/${PKG_NAME}/
 	if [[ -z ${NOT_DEL} ]]
 	then
-		rm -rf ${PKG_DIR}/${PKG_NAME}/!(${NOT_DEL})
+		echo ${PKG_DIR:?}/${PKG_NAME:?}/!(${NOT_DEL:?})
+		rm -rf ${PKG_DIR:?}/${PKG_NAME:?}/!(${NOT_DEL:?})
 	fi
 	ls ${PKG_DIR}/${PKG_NAME}/
 }
