@@ -511,8 +511,10 @@ AddPackageSubdir() {
 	[[ ! ${PKG_DIR} =~ ${GITHUB_WORKSPACE} ]] && PKG_DIR=package/${PKG_DIR}
 	REPO_URL="https://github.com/$2/$3"
 	PKG_NAME=$3
-	SUB_DIR=$4
-	REPO_BRANCH=$5
+	REPO_BRANCH=$4
+	SUB_DIR=$5
+	UN_WANT=$6
+	echo "REPO_URL=${REPO_URL}, PKG_NAME=${PKG_NAME}, REPO_BRANCH=${REPO_BRANCH}, SUB_DIR=${SUB_DIR}, UN_WANT=${UN_WANT}"
 
 	MKDIR ${PKG_DIR}
 	if [[ -d ${PKG_DIR}/${PKG_NAME} ]]
@@ -531,6 +533,10 @@ AddPackageSubdir() {
 	cd ${PKG_NAME}
 	git config core.sparsecheckout true
 	echo "${SUB_DIR}" >> .git/info/sparse-checkout
+	if [[ -z ${UN_WANT} ]]
+	then
+		echo "!${UN_WANT}" >> .git/info/sparse-checkout
+	fi
 	git remote add origin ${REPO_URL}
 	git pull origin ${REPO_BRANCH}
 	ls -R
