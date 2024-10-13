@@ -3,6 +3,7 @@
 # AutoBuild Functions
 
 Firmware_Diy_Start() {
+	shopt -s extglob
 	ECHO "[Firmware_Diy_Start] Starting ..."
 	WORK="${GITHUB_WORKSPACE}/openwrt"
 	CONFIG_TEMP="${WORK}/.config"

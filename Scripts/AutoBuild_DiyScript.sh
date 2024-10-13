@@ -74,7 +74,6 @@ Firmware_Diy() {
 	# Copy <cp_from> <cp_to > <rename>
 	# merge_package <git_branch> <git_repo_url> <package_path> <target_path>..
 
-	shopt -s extglob
 	# 通用插件
 	## luci-app-ddns-go
 	rm -rf ${FEEDS_LUCI}/luci-app-ddns-go
