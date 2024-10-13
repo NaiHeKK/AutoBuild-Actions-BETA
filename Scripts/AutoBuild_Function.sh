@@ -528,6 +528,7 @@ AddPackageSubdir() {
 	ECHO "Downloading package [${PKG_NAME}] to ${PKG_DIR} ..."
 	cd ${PKG_DIR}
 	git init -b ${REPO_BRANCH} ${PKG_NAME}
+	cd ${PKG_NAME}
 	git config core.sparsecheckout true
 	echo "${SUB_DIR}" >> .git/info/sparse-checkout
 	git remote add origin ${REPO_URL}
