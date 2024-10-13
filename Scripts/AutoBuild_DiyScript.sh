@@ -119,7 +119,7 @@ EOF
 			AddPackage other sbwml luci-app-mosdns v5
 			AddPackage other morytyann OpenWrt-mihomo main
 			# frps frpc
-			# AddPackageSubdir other kenzok8 jell main frp/* *-frp*/*
+			AddPackageSubdir other kenzok8 jell main frp/* *-frp*/*
 			# rm -rf ${FEEDS_LUCI}/luci-app-frpc
 			# rm -rf ${FEEDS_LUCI}/luci-app-frps
 			# rm -rf ${FEEDS_PKG}/frp
@@ -182,7 +182,6 @@ EOF
 			AddPackage passwall xiaorouji openwrt-passwall-packages main
 			AddPackage passwall xiaorouji openwrt-passwall main
 			AddPackage passwall xiaorouji openwrt-passwall2 main
-			ls -R package/passwall
 			rm -r ${WORK}/package/other/helloworld/xray-core
 			rm -r ${WORK}/package/other/helloworld/xray-plugin
 		;;
