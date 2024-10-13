@@ -485,7 +485,6 @@ AddPackage() {
 	REPO_URL="https://github.com/$2/$3"
 	PKG_NAME=$3
 	REPO_BRANCH=$4
-	NOT_DEL=$5
 
 	MKDIR ${PKG_DIR}
 	if [[ -d ${PKG_DIR}/${PKG_NAME} ]]
@@ -500,8 +499,9 @@ AddPackage() {
 	fi
 	ECHO "Downloading package [${PKG_NAME}] to ${PKG_DIR} ..."
 	git clone --depth 1 -b ${REPO_BRANCH} ${REPO_URL} ${PKG_DIR}/${PKG_NAME}/
-	if [[ -z ${NOT_DEL} ]]
+	if [[ $# -lt 5 ]]
 	then
+		NOT_DEL=$5
 		echo ${PKG_DIR:?}/${PKG_NAME:?}/!(${NOT_DEL:?})
 		rm -rf ${PKG_DIR:?}/${PKG_NAME:?}/!(${NOT_DEL:?})
 	fi
