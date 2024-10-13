@@ -194,7 +194,10 @@ EOF
 		AddPackage other morytyann OpenWrt-mihomo main
 		AddPackage themes sirpdboy luci-theme-kucat js
 		# frps frpc
-		AddPackageSubdir other kenzok8 jell main frp/* *-frp*/*
+		# For Use RemoveDirWithoutRex or find
+		# AddPackage other kenzok8 jell main frp$\|.*-frp.*
+		# For Use rm !()
+		AddPackage other kenzok8 jell main frp\|*-frp*
 		rm -rf ${FEEDS_LUCI}/luci-app-frpc
 		rm -rf ${FEEDS_LUCI}/luci-app-frps
 		rm -rf ${FEEDS_PKG}/frp

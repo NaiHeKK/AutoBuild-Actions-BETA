@@ -498,7 +498,7 @@ AddPackage() {
 		REPO_BRANCH=main
 	fi
 	ECHO "Downloading package [${PKG_NAME}] to ${PKG_DIR} ..."
-	git clone --depth 1 -b ${REPO_BRANCH} ${REPO_URL} ${PKG_DIR}/${PKG_NAME}/
+	git clone --depth 1 -b ${REPO_BRANCH} ${REPO_URL} ${PKG_DIR}/${PKG_NAME}/ > /dev/null 2>&1
 	if [ "$5" ]
 	then
 		NOT_DEL=$5
@@ -522,48 +522,6 @@ RemoveDirWithoutRex() {
 			echo "Deleted folder: $dir_name"
 		fi
 	done
-}
-
-AddPackageSubdir() {
-	if [[ $# -lt 4 ]]
-	then
-		ECHO "Syntax error: [$#] [$*]"
-		return 0
-	fi
-	PKG_DIR=$1
-	[[ ! ${PKG_DIR} =~ ${GITHUB_WORKSPACE} ]] && PKG_DIR=package/${PKG_DIR}
-	REPO_URL="https://github.com/$2/$3"
-	PKG_NAME=$3
-	REPO_BRANCH=$4
-	echo "REPO_URL=${REPO_URL}, PKG_NAME=${PKG_NAME}, REPO_BRANCH=${REPO_BRANCH}"
-
-	MKDIR ${PKG_DIR}
-	if [[ -d ${PKG_DIR}/${PKG_NAME} ]]
-	then
-		ECHO "Removing old package: [${PKG_NAME}] ..."
-		rm -rf "${PKG_DIR}/${PKG_NAME}"
-	fi
-
-	if [[ -z ${REPO_BRANCH} ]]
-	then
-		REPO_BRANCH=main
-	fi
-	ECHO "Downloading package [${PKG_NAME}] to ${PKG_DIR} ..."
-	cd ${PKG_DIR}
-	git init -b ${REPO_BRANCH} ${PKG_NAME}
-	cd ${PKG_NAME}
-	git config core.sparsecheckout true
-	for arg in "${@:5}"
-	do
-		echo "${arg}" >> .git/info/sparse-checkout
-	done
-	if [[ -z $5 ]]
-	then
-		echo "*" >> .git/info/sparse-checkout
-	fi
-	git remote add origin ${REPO_URL}
-	git pull origin ${REPO_BRANCH}
-	ls
 }
 
 Copy() {
