@@ -502,7 +502,8 @@ AddPackage() {
 	if [[ $# -lt 5 ]]
 	then
 		NOT_DEL=$5
-		RemoveDirWithoutRex ${PKG_DIR}/${PKG_NAME} ${NOT_DEL}
+		# RemoveDirWithoutRex ${PKG_DIR}/${PKG_NAME} ${NOT_DEL}
+		find ${PKG_DIR}/${PKG_NAME} -type d -maxdepth 1 ! -regex "${NOT_DEL}" -exec rm -rf {} +
 	fi
 	ls ${PKG_DIR}/${PKG_NAME}/
 }
