@@ -504,7 +504,7 @@ AddPackage() {
 		NOT_DEL=$5
 		echo "NOT_DEL:${NOT_DEL}"
 		RemoveDirWithoutRex ${PKG_DIR}/${PKG_NAME} ${NOT_DEL}
-		# find ${PKG_DIR}/${PKG_NAME}/* -type d -maxdepth 0 ! -regex "${NOT_DEL}" -exec rm -rf {} +
+		# find ${PKG_DIR}/${PKG_NAME}/* -type d -maxdepth 0 ! -regex ".*$(echo "$NOT_DEL" | sed 's/|/\\|/g')" -exec rm -rf {} +
 	fi
 	ls ${PKG_DIR}/${PKG_NAME}/
 }
@@ -517,8 +517,8 @@ RemoveDirWithoutRex() {
     dir_name=$(basename "$dir")
     if [[ ! "$dir_name" =~ $REGEX ]]
     then
-        rm -rf "$dir"
-        echo "Deleted folder: $dir_name"
+      rm -rf "$dir"
+      echo "Deleted folder: $dir_name"
     fi
   done
 }

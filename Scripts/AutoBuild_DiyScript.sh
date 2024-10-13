@@ -119,7 +119,7 @@ EOF
 			AddPackage other sbwml luci-app-mosdns v5
 			AddPackage other morytyann OpenWrt-mihomo main
 			# frps frpc
-			AddPackage other kenzok8 jell main frp\|*-frp*
+			AddPackage other kenzok8 jell main frp$\|.*-frp.*
 			rm -rf ${FEEDS_LUCI}/luci-app-frpc
 			rm -rf ${FEEDS_LUCI}/luci-app-frps
 			rm -rf ${FEEDS_PKG}/frp
