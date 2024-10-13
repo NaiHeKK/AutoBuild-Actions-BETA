@@ -500,7 +500,7 @@ AddPackage() {
 	ECHO "Downloading package [${PKG_NAME}] to ${PKG_DIR} ..."
 	git config core.sparsecheckout false
 	git clone --depth 1 -b ${REPO_BRANCH} ${REPO_URL} ${PKG_DIR}/${PKG_NAME}/
-	ls -R
+	ls ${PKG_DIR}/${PKG_NAME}/
 }
 
 AddPackageSubdir() {
