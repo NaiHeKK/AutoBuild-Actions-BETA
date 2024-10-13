@@ -139,6 +139,8 @@ jobs:
 
     - name: Load Custom Variables
       run: |
+        echo "For Use rm !()"
+        shopt -s extglob
         if [ -n "${{ github.event.inputs.Tempoary_CONFIG }}" ]
         then
             if [ -f "$GITHUB_WORKSPACE/Configs/${{ github.event.inputs.Tempoary_CONFIG }}" ]

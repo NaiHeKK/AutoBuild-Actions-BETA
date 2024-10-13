@@ -503,24 +503,25 @@ AddPackage() {
 	then
 		NOT_DEL=$5
 		echo "NOT_DEL:${NOT_DEL}"
-		RemoveDirWithoutRex ${PKG_DIR}/${PKG_NAME} ${NOT_DEL}
+		# RemoveDirWithoutRex ${PKG_DIR}/${PKG_NAME} ${NOT_DEL}
 		# find ${PKG_DIR}/${PKG_NAME}/* -type d -maxdepth 0 ! -regex ".*$(echo "$NOT_DEL" | sed 's/|/\\|/g')" -exec rm -rf {} +
+		rm -rf ${PKG_DIR:?}/${PKG_NAME:?}/!(${NOT_DEL:?})
 	fi
 	ls ${PKG_DIR}/${PKG_NAME}/
 }
 
 RemoveDirWithoutRex() {
-  TARGET_DIR=$1
-  REGEX="$2"
-  for dir in "$TARGET_DIR"/*
-  do
-    dir_name=$(basename "$dir")
-    if [[ ! "$dir_name" =~ $REGEX ]]
-    then
-      rm -rf "$dir"
-      echo "Deleted folder: $dir_name"
-    fi
-  done
+	TARGET_DIR=$1
+	REGEX="$2"
+	for dir in "$TARGET_DIR"/*
+	do
+		dir_name=$(basename "$dir")
+		if [[ ! "$dir_name" =~ $REGEX ]]
+		then
+			rm -rf "$dir"
+			echo "Deleted folder: $dir_name"
+		fi
+	done
 }
 
 AddPackageSubdir() {

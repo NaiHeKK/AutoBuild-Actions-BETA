@@ -119,7 +119,10 @@ EOF
 			AddPackage other sbwml luci-app-mosdns v5
 			AddPackage other morytyann OpenWrt-mihomo main
 			# frps frpc
-			AddPackage other kenzok8 jell main frp$\|.*-frp.*
+			# Use RemoveDirWithoutRex or find
+			# AddPackage other kenzok8 jell main frp$\|.*-frp.*
+			# Use rm !()
+			AddPackage other kenzok8 jell main frp\|*-frp*
 			rm -rf ${FEEDS_LUCI}/luci-app-frpc
 			rm -rf ${FEEDS_LUCI}/luci-app-frps
 			rm -rf ${FEEDS_PKG}/frp
