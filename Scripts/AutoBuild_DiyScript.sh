@@ -68,7 +68,7 @@ Firmware_Diy() {
 	# ${FEEDS_PKG}			OpenWrt 源码目录下的 package/feeds/packages 目录
 	# ${BASE_FILES}			OpenWrt 源码目录下的 package/base-files/files 目录
 
-	# AddPackage <package_path> <git_user> <git_repo> <git_branch>
+	# AddPackageSubdir <package_path> <git_user> <git_repo> <git_branch>
 	# ClashDL <platform> <core_type> [dev/tun/meta]
 	# ReleaseDL <release_url> <file> <target_path>
 	# Copy <cp_from> <cp_to > <rename>
@@ -78,13 +78,13 @@ Firmware_Diy() {
 	## luci-app-ddns-go
 	rm -rf ${FEEDS_LUCI}/luci-app-ddns-go
 	rm -rf ${FEEDS_PKG}/ddns-go
-	AddPackage ddns-go sirpdboy luci-app-ddns-go main
+	AddPackageSubdir ddns-go sirpdboy luci-app-ddns-go main
 	## luci-app-advancedplus
-	AddPackage other sirpdboy luci-app-advancedplus main
+	AddPackageSubdir other sirpdboy luci-app-advancedplus main
 	## luci-app-lucky
-	AddPackage other sirpdboy luci-app-lucky main
+	AddPackageSubdir other sirpdboy luci-app-lucky main
 	## OpenClash
-	AddPackage other vernesong OpenClash dev
+	AddPackageSubdir other vernesong OpenClash dev
 
 	case "${OP_AUTHOR}/${OP_REPO}:${OP_BRANCH}" in
 	coolsnowwolf/lede:master)
@@ -110,14 +110,14 @@ EOF
 		# sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase="/luci-static/argon-mod"' $(PKG_Finder d package default-settings)/files/zzz-default-settings
 
 		rm -rf ${FEEDS_LUCI}/luci-theme-argon*
-		AddPackage other jerrykuku luci-app-argon-config master
-		AddPackage other fw876 helloworld main
+		AddPackageSubdir other jerrykuku luci-app-argon-config master
+		AddPackageSubdir other fw876 helloworld main
 		if [[ ${LUCI_23} == true ]]
 		then
 			echo "luci-theme-kucat: js"
-			AddPackage themes sirpdboy luci-theme-kucat js
-			AddPackage other sbwml luci-app-mosdns v5
-			AddPackage other morytyann OpenWrt-mihomo main
+			AddPackageSubdir themes sirpdboy luci-theme-kucat js
+			AddPackageSubdir other sbwml luci-app-mosdns v5
+			AddPackageSubdir other morytyann OpenWrt-mihomo main
 			# frps frpc
 			AddPackageSubdir other kenzok8 jell main frp/* *-frp*/*
 			# rm -rf ${FEEDS_LUCI}/luci-app-frpc
@@ -125,14 +125,14 @@ EOF
 			# rm -rf ${FEEDS_PKG}/frp
 		else
 			echo "luci-theme-kucat: main"
-			AddPackage themes sirpdboy luci-theme-kucat main
-			AddPackage other sbwml luci-app-mosdns v5-lua
+			AddPackageSubdir themes sirpdboy luci-theme-kucat main
+			AddPackageSubdir other sbwml luci-app-mosdns v5-lua
 		fi
-		AddPackage themes jerrykuku luci-theme-argon 18.06
-		AddPackage themes thinktip luci-theme-neobird main
-		AddPackage msd_lite ximiTech luci-app-msd_lite main
-		AddPackage msd_lite ximiTech msd_lite main
-		AddPackage iptvhelper riverscn openwrt-iptvhelper master
+		AddPackageSubdir themes jerrykuku luci-theme-argon 18.06
+		AddPackageSubdir themes thinktip luci-theme-neobird main
+		AddPackageSubdir msd_lite ximiTech luci-app-msd_lite main
+		AddPackageSubdir msd_lite ximiTech msd_lite main
+		AddPackageSubdir iptvhelper riverscn openwrt-iptvhelper master
 		rm -rf ${WORK}/package/other/helloworld/mosdns
 		rm -rf ${FEEDS_PKG}/mosdns
 		rm -rf ${FEEDS_LUCI}/luci-app-mosdns
@@ -154,9 +154,9 @@ EOF
 		case "${TARGET_PROFILE}" in
 		d-team_newifi-d2)
 			Copy ${CustomFiles}/${TARGET_PROFILE}_system ${BASE_FILES}/etc/config system
-			AddPackage passwall xiaorouji openwrt-passwall-packages main
-			AddPackage passwall xiaorouji openwrt-passwall main
-			AddPackage passwall xiaorouji openwrt-passwall2 main
+			AddPackageSubdir passwall xiaorouji openwrt-passwall-packages main
+			AddPackageSubdir passwall xiaorouji openwrt-passwall main
+			AddPackageSubdir passwall xiaorouji openwrt-passwall2 main
 			rm -r ${WORK}/package/passwall/openwrt-passwall-packages/xray-core
 		;;
 		x86_64)
@@ -164,32 +164,32 @@ EOF
 			ClashDL amd64 dev
 			ClashDL amd64 tun
 			ClashDL amd64 meta
-			AddPackage passwall xiaorouji openwrt-passwall-packages main
-			AddPackage passwall xiaorouji openwrt-passwall main
-			# AddPackage passwall xiaorouji openwrt-passwall2 main
+			AddPackageSubdir passwall xiaorouji openwrt-passwall-packages main
+			AddPackageSubdir passwall xiaorouji openwrt-passwall main
+			# AddPackageSubdir passwall xiaorouji openwrt-passwall2 main
 			rm -r ${WORK}/package/other/helloworld/xray-core
 			rm -r ${WORK}/package/other/helloworld/xray-plugin
 			# rm -rf packages/lean/autocore
-			# AddPackage lean Hyy2001X autocore-modify master
+			# AddPackageSubdir lean Hyy2001X autocore-modify master
 			Copy ${CustomFiles}/speedtest ${BASE_FILES}/usr/bin
 			chmod +x ${BASE_FILES}/usr/bin/speedtest
 		;;
 		xiaomi_redmi-router-ax6s)
-			AddPackage passwall-depends xiaorouji openwrt-passwall-packages main
-			AddPackage passwall-luci xiaorouji openwrt-passwall main
+			AddPackageSubdir passwall-depends xiaorouji openwrt-passwall-packages main
+			AddPackageSubdir passwall-luci xiaorouji openwrt-passwall main
 		;;
 		cmcc_rax3000m*)
-			AddPackage passwall xiaorouji openwrt-passwall-packages main
-			AddPackage passwall xiaorouji openwrt-passwall main
-			AddPackage passwall xiaorouji openwrt-passwall2 main
+			AddPackageSubdir passwall xiaorouji openwrt-passwall-packages main
+			AddPackageSubdir passwall xiaorouji openwrt-passwall main
+			AddPackageSubdir passwall xiaorouji openwrt-passwall2 main
 			rm -r ${WORK}/package/other/helloworld/xray-core
 			rm -r ${WORK}/package/other/helloworld/xray-plugin
 		;;
 		esac
 	;;
 	immortalwrt/immortalwrt*)
-		AddPackage other morytyann OpenWrt-mihomo main
-		AddPackage themes sirpdboy luci-theme-kucat js
+		AddPackageSubdir other morytyann OpenWrt-mihomo main
+		AddPackageSubdir themes sirpdboy luci-theme-kucat js
 		# frps frpc
 		AddPackageSubdir other kenzok8 jell main frp/* *-frp*/*
 		rm -rf ${FEEDS_LUCI}/luci-app-frpc
@@ -201,12 +201,12 @@ EOF
 			case "${CONFIG_FILE}" in
 			x86_64-NextV21)
 				# sed -i "s?/bin/login?/usr/libexec/login.sh?g" ${FEEDS_PKG}/ttyd/files/ttyd.config
-				# AddPackage passwall xiaorouji openwrt-passwall2 main
-				AddPackage passwall xiaorouji openwrt-passwall main
+				# AddPackageSubdir passwall xiaorouji openwrt-passwall2 main
+				AddPackageSubdir passwall xiaorouji openwrt-passwall main
 				rm -r ${FEEDS_LUCI}/luci-app-passwall
 				rm -r ${FEEDS_PKG}/xray-core
 				rm -r ${FEEDS_PKG}/xray-plugin
-				AddPackage other sbwml luci-app-mosdns v5
+				AddPackageSubdir other sbwml luci-app-mosdns v5
 				rm -r ${WORK}/package/other/luci-app-mosdns/mosdns
 				Copy ${CustomFiles}/speedtest ${BASE_FILES}/usr/bin
 				chmod +x ${BASE_FILES}/usr/bin/speedtest
@@ -216,7 +216,7 @@ EOF
 		esac
 	;;
 	padavanonly/immortalwrtARM*)
-		AddPackage themes sirpdboy luci-theme-kucat main
+		AddPackageSubdir themes sirpdboy luci-theme-kucat main
 		case "${TARGET_PROFILE}" in
 		xiaomi_redmi-router-ax6s)
 			:
@@ -224,16 +224,16 @@ EOF
 		esac
 	;;
 	hanwckf/immortalwrt-mt798x* | padavanonly/immortalwrt-mt798x*)
-		AddPackage themes sirpdboy luci-theme-kucat main
+		AddPackageSubdir themes sirpdboy luci-theme-kucat main
 		case "${TARGET_PROFILE}" in
 		cmcc_rax3000m | jcg_q30)
-			AddPackage passwall xiaorouji openwrt-passwall main
-			AddPackage passwall xiaorouji openwrt-passwall2 main
+			AddPackageSubdir passwall xiaorouji openwrt-passwall main
+			AddPackageSubdir passwall xiaorouji openwrt-passwall2 main
 			rm -r ${FEEDS_LUCI}/luci-app-passwall
 			rm -r ${FEEDS_PKG}/xray-core
 			rm -r ${FEEDS_PKG}/xray-plugin
 
-			AddPackage other sbwml luci-app-mosdns v5
+			AddPackageSubdir other sbwml luci-app-mosdns v5
 			rm -r ${WORK}/package/other/luci-app-mosdns/mosdns
 
 			mosdns_version="5.3.3"

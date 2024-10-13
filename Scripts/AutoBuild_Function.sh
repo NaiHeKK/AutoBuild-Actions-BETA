@@ -502,7 +502,7 @@ AddPackage() {
 }
 
 AddPackageSubdir() {
-	if [[ $# -lt 5 ]]
+	if [[ $# -lt 4 ]]
 	then
 		ECHO "Syntax error: [$#] [$*]"
 		return 0
@@ -534,6 +534,10 @@ AddPackageSubdir() {
 	do
 		echo "${arg}" >> .git/info/sparse-checkout
 	done
+	if [[ -z $5 ]]
+	then
+		echo "*" >> .git/info/sparse-checkout
+	fi
 	git remote add origin ${REPO_URL}
 	git pull origin ${REPO_BRANCH}
 	ls
