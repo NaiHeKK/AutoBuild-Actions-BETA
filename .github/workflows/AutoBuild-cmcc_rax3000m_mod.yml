@@ -139,8 +139,6 @@ jobs:
 
     - name: Load Custom Variables
       run: |
-        echo "For Use rm !()"
-        shopt -s extglob
         if [ -n "${{ github.event.inputs.Tempoary_CONFIG }}" ]
         then
             if [ -f "$GITHUB_WORKSPACE/Configs/${{ github.event.inputs.Tempoary_CONFIG }}" ]
@@ -356,6 +354,8 @@ jobs:
             echo -e "\nCONFIG_DOCKER_STO_EXT4=y" >> $GITHUB_WORKSPACE/Configs/$CONFIG_FILE
             echo -e "\nCONFIG_PACKAGE_docker-compose=y\n" >> $GITHUB_WORKSPACE/Configs/$CONFIG_FILE
         fi
+        echo "For Use rm !()"
+        shopt -s extglob
         cp $GITHUB_WORKSPACE/Configs/$CONFIG_FILE .config
         source $GITHUB_WORKSPACE/Scripts/AutoBuild_DiyScript.sh
         source $GITHUB_WORKSPACE/Scripts/AutoBuild_Function.sh
