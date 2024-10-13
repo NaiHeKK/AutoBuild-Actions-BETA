@@ -118,6 +118,11 @@ EOF
 			AddPackage themes sirpdboy luci-theme-kucat js
 			AddPackage other sbwml luci-app-mosdns v5
 			AddPackage other morytyann OpenWrt-mihomo main
+			# frps frpc
+			AddPackageSubdir other kenzok8 jell frp* main
+			rm -rf ${FEEDS_LUCI}/luci-app-frpc
+			rm -rf ${FEEDS_LUCI}/luci-app-frps
+	    rm -rf ${FEEDS_PKG}/frp
 		else
 		  echo "luci-theme-kucat: main"
 		  AddPackage themes sirpdboy luci-theme-kucat main

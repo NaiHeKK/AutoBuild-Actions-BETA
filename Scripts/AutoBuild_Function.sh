@@ -501,6 +501,39 @@ AddPackage() {
 	git clone --depth 1 -b ${REPO_BRANCH} ${REPO_URL} ${PKG_DIR}/${PKG_NAME}/ > /dev/null 2>&1
 }
 
+AddPackageSubdir() {
+	if [[ $# -lt 5 ]]
+	then
+		ECHO "Syntax error: [$#] [$*]"
+		return 0
+	fi
+	PKG_DIR=$1
+	[[ ! ${PKG_DIR} =~ ${GITHUB_WORKSPACE} ]] && PKG_DIR=package/${PKG_DIR}
+	REPO_URL="https://github.com/$2/$3"
+	PKG_NAME=$3
+	SUB_DIR=$4
+	REPO_BRANCH=$5
+
+	MKDIR ${PKG_DIR}
+	if [[ -d ${PKG_DIR}/${PKG_NAME} ]]
+	then
+		ECHO "Removing old package: [${PKG_NAME}] ..."
+		rm -rf "${PKG_DIR}/${PKG_NAME}"
+	fi
+
+	if [[ -z ${REPO_BRANCH} ]]
+	then
+		REPO_BRANCH=main
+	fi
+	ECHO "Downloading package [${PKG_NAME}] to ${PKG_DIR} ..."
+	cd ${PKG_DIR}
+	git init -b ${REPO_BRANCH} ${PKG_NAME}
+	git config core.sparsecheckout true
+	echo "${SUB_DIR}" >> .git/info/sparse-checkout
+	git remote add origin ${REPO_URL}
+	git pull origin ${REPO_BRANCH}
+}
+
 Copy() {
 	if [[ ! $# =~ [23] ]]
 	then
