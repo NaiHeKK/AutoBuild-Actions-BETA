@@ -3,7 +3,6 @@
 # AutoBuild Functions
 
 Firmware_Diy_Start() {
-	shopt -s extglob
 	ECHO "[Firmware_Diy_Start] Starting ..."
 	WORK="${GITHUB_WORKSPACE}/openwrt"
 	CONFIG_TEMP="${WORK}/.config"
@@ -503,12 +502,22 @@ AddPackage() {
 	if [[ $# -lt 5 ]]
 	then
 		NOT_DEL=$5
-		echo ${PKG_DIR:?}/${PKG_NAME:?}/!(${NOT_DEL:?})
-		rm -rf ${PKG_DIR:?}/${PKG_NAME:?}/!(${NOT_DEL:?})
+		RemoveDirWithoutRex ${PKG_DIR}/${PKG_NAME} ${NOT_DEL}
 	fi
 	ls ${PKG_DIR}/${PKG_NAME}/
 }
 
+RemoveDirWithoutRex() {
+  TARGET_DIR=$1
+  REGEX=$2
+  find "$TARGET_DIR" -maxdepth 1 -type d | while read dir; do
+    dir_name=$(basename "$dir")
+    if [[ ! "$dir_name" =~ $REGEX ]]; then
+        rm -rf "$dir"
+        echo "Deleted folder: $dir_name"
+    fi
+  done
+}
 AddPackageSubdir() {
 	if [[ $# -lt 4 ]]
 	then
