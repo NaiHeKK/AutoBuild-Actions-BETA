@@ -499,9 +499,10 @@ AddPackage() {
 	fi
 	ECHO "Downloading package [${PKG_NAME}] to ${PKG_DIR} ..."
 	git clone --depth 1 -b ${REPO_BRANCH} ${REPO_URL} ${PKG_DIR}/${PKG_NAME}/
-	if [[ $# -lt 5 ]]
+	if [ "$5" ]
 	then
 		NOT_DEL=$5
+		echo "NOT_DEL:${NOT_DEL}"
 		# RemoveDirWithoutRex ${PKG_DIR}/${PKG_NAME} ${NOT_DEL}
 		find ${PKG_DIR}/${PKG_NAME} -type d -maxdepth 1 ! -regex "${NOT_DEL}" -exec rm -rf {} +
 	fi
@@ -513,7 +514,7 @@ RemoveDirWithoutRex() {
   REGEX=$2
   find "$TARGET_DIR" -maxdepth 1 -type d | while read dir; do
     dir_name=$(basename "$dir")
-    if [[ ! "$dir_name" =~ $REGEX ]]; then
+    if [[ ! "$dir_name" =~ "$REGEX" ]]; then
         rm -rf "$dir"
         echo "Deleted folder: $dir_name"
     fi
