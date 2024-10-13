@@ -498,7 +498,8 @@ AddPackage() {
 		REPO_BRANCH=main
 	fi
 	ECHO "Downloading package [${PKG_NAME}] to ${PKG_DIR} ..."
-	git clone --depth 1 -b ${REPO_BRANCH} ${REPO_URL} ${PKG_DIR}/${PKG_NAME}/ > /dev/null 2>&1
+	git clone --depth 1 -b ${REPO_BRANCH} ${REPO_URL} ${PKG_DIR}/${PKG_NAME}/
+	ls -R
 }
 
 AddPackageSubdir() {
