@@ -81,7 +81,7 @@ env:
 # 删除无用文件以增加编译空间
   DELETE_USELESS_FILES: true
 # 删除早期的 workflow 任务
-  DELETE_OLD_WORKFLOW: true
+  DELETE_OLD_WORKFLOW: false
 # Cache 加速编译
   CACHE_ACCELERATE: false
 # RELEASE_TAG_NAME
