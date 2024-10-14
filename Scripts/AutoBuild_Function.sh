@@ -503,9 +503,10 @@ AddPackage() {
 	then
 		NOT_DEL=$5
 		echo "NOT_DEL:${NOT_DEL}"
-		# RemoveDirWithoutRex ${PKG_DIR}/${PKG_NAME} ${NOT_DEL}
+		RemoveDirWithoutRex ${PKG_DIR}/${PKG_NAME} ${NOT_DEL}
 		# find ${PKG_DIR}/${PKG_NAME}/* -type d -maxdepth 0 ! -regex ".*$(echo "$NOT_DEL" | sed 's/|/\\|/g')" -exec rm -rf {} +
-		rm -rf ${PKG_DIR:?}/${PKG_NAME:?}/!(${NOT_DEL:?})
+		# need [shopt -s extglob] in workflows.yml
+		# rm -rf ${PKG_DIR:?}/${PKG_NAME:?}/!(${NOT_DEL:?})
 	fi
 	ls ${PKG_DIR}/${PKG_NAME}/
 }
