@@ -1,5 +1,7 @@
 name: Delete old workflow runs
 
+on:
+
 jobs:
   del_runs:
     runs-on: ubuntu-latest
