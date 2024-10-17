@@ -23,7 +23,7 @@ on:
           - '256M'
       Tempoary_SOURCE:
         description: '源码仓库 [可选]'
-        default: 'hanwckf/immortalwrt-mt798x:openwrt-21.02'
+        default: 'coolsnowwolf/lede:master'
         type: choice
         options:
           - 'hanwckf/immortalwrt-mt798x:openwrt-21.02'
