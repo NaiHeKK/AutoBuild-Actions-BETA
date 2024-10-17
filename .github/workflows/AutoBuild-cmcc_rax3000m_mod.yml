@@ -320,6 +320,7 @@ jobs:
         then
             echo "Testing_KERNEL"
             echo -e "\nCONFIG_TESTING_KERNEL=y\n" >> $GITHUB_WORKSPACE/Configs/$CONFIG_FILE
+            RELEASE_TAG_NAME=${RELEASE_TAG_NAME}_TESTKERNEL
         fi
         if [ "${{ github.event.inputs.INCLUDE_DOCKER }}" == true ]
         then
