@@ -38,10 +38,6 @@ on:
         description: '添加Docker？'
         default: false
         type: boolean
-      LUCI_23:
-        description: 'luci 23.05（LEDE默认为18）LEDE用？'
-        default: true
-        type: boolean
       INCLUDE_KENZOK8:
         description: '添加KENZOK8软件库 [可选]'
         default: ''
@@ -184,14 +180,9 @@ jobs:
         if [[ "$DEFAULT_SOURCE" =~ "lede" ]]
         then
             echo "Tempoary_FLAG=LEDE" >> $GITHUB_ENV
-            CONFIG_FILE=${{ env.CONFIG_FILE }}_LEDE
-            RELEASE_TAG_NAME=${RELEASE_TAG_NAME}_LEDE
+            CONFIG_FILE=${{ env.CONFIG_FILE }}_LEDE_2305
+            RELEASE_TAG_NAME=${RELEASE_TAG_NAME}_LEDE_2305
             echo "LEDE"
-            if [ "${{ github.event.inputs.LUCI_23 }}" == "true" ]
-            then
-                CONFIG_FILE=${{ env.CONFIG_FILE }}_LEDE_2305
-                RELEASE_TAG_NAME=${RELEASE_TAG_NAME}_2305
-            fi
         elif [[ "$DEFAULT_SOURCE" =~ "hanwckf" ]]
         then
             echo "Tempoary_FLAG=hanwckf" >> $GITHUB_ENV
@@ -218,11 +209,6 @@ jobs:
         else
             echo "CONFIG_FILE: [/Config/$CONFIG_FILE]"
             echo "CONFIG_FILE=$CONFIG_FILE" >> $GITHUB_ENV
-        fi
-        if [ -n "${{ github.event.inputs.LUCI_23 }}" ]
-        then
-            echo "LUCI_23: [${{ github.event.inputs.LUCI_23 }}]"
-            echo "LUCI_23=${{ github.event.inputs.LUCI_23 }}" >> $GITHUB_ENV
         fi
         if [ -n "${{ github.event.inputs.INCLUDE_KENZOK8 }}" ]
         then
@@ -262,15 +248,6 @@ jobs:
         git clone -b $REPO_BRANCH $REPO_URL openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
         cd openwrt
-        if [ "${{ env.DEFAULT_SOURCE }}" == "coolsnowwolf/lede:master" ]
-        then
-            echo "LEDE"
-            if [ "${{ env.LUCI_23 }}" == false ]
-            then
-                echo "LUCI_18"
-                sed -i 's|src-git luci https://github.com/coolsnowwolf/luci.git;openwrt-23.05|src-git luci https://github.com/coolsnowwolf/luci|' feeds.conf.default
-            fi
-        fi
         if [ "${{ env.INCLUDE_KENZOK8 }}" == "openwrt-packages" ]
         then
             echo "INCLUDE_KENZOK8 openwrt-packages"

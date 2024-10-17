@@ -112,25 +112,24 @@ EOF
 		rm -rf ${FEEDS_LUCI}/luci-theme-argon*
 		AddPackage other jerrykuku luci-app-argon-config master
 		AddPackage other fw876 helloworld main
-		if [[ ${LUCI_23} == true ]]
-		then
-			echo "luci-theme-kucat: js"
-			AddPackage themes sirpdboy luci-theme-kucat js
-			AddPackage other sbwml luci-app-mosdns v5
-			AddPackage other morytyann OpenWrt-mihomo main
-			# frps frpc
-			# For Use RemoveDirWithoutRex or find
-			AddPackage other kenzok8 jell main frp$\|.*-frp.*
-			# For Use rm !()
-			# AddPackage other kenzok8 jell main frp\|*-frp*
-			rm -rf ${FEEDS_LUCI}/luci-app-frpc
-			rm -rf ${FEEDS_LUCI}/luci-app-frps
-			rm -rf ${FEEDS_PKG}/frp
-		else
-			echo "luci-theme-kucat: main"
-			AddPackage themes sirpdboy luci-theme-kucat main
-			AddPackage other sbwml luci-app-mosdns v5-lua
-		fi
+
+		# For 23.05
+		AddPackage themes sirpdboy luci-theme-kucat js
+		AddPackage other sbwml luci-app-mosdns v5
+		AddPackage other morytyann OpenWrt-mihomo main
+		# frps frpc
+		# For Use RemoveDirWithoutRex or find
+		AddPackage other kenzok8 jell main frp$\|.*-frp.*
+		# For Use rm !()
+		# AddPackage other kenzok8 jell main frp\|*-frp*
+		rm -rf ${FEEDS_LUCI}/luci-app-frpc
+		rm -rf ${FEEDS_LUCI}/luci-app-frps
+		rm -rf ${FEEDS_PKG}/frp
+
+		# For 18.06
+		# AddPackage themes sirpdboy luci-theme-kucat main
+		# AddPackage other sbwml luci-app-mosdns v5-lua
+
 		AddPackage themes jerrykuku luci-theme-argon 18.06
 		AddPackage themes thinktip luci-theme-neobird main
 		AddPackage msd_lite ximiTech luci-app-msd_lite main
