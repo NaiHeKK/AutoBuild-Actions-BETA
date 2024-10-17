@@ -39,8 +39,8 @@ on:
         default: false
         type: boolean
       LUCI_23:
-        description: 'luci改为23.05（LEDE默认为18）LEDE用？'
-        default: false
+        description: 'luci 23.05（LEDE默认为18）LEDE用？'
+        default: true
         type: boolean
       INCLUDE_KENZOK8:
         description: '添加KENZOK8软件库 [可选]'
@@ -265,10 +265,10 @@ jobs:
         if [ "${{ env.DEFAULT_SOURCE }}" == "coolsnowwolf/lede:master" ]
         then
             echo "LEDE"
-            if [ "${{ env.LUCI_23 }}" == true ]
+            if [ "${{ env.LUCI_23 }}" == false ]
             then
-                echo "LUCI_23"
-                sed -i 's|src-git luci https://github.com/coolsnowwolf/luci|src-git luci https://github.com/coolsnowwolf/luci.git;openwrt-23.05|' feeds.conf.default
+                echo "LUCI_18"
+                sed -i 's|src-git luci https://github.com/coolsnowwolf/luci.git;openwrt-23.05|src-git luci https://github.com/coolsnowwolf/luci|' feeds.conf.default
             fi
         fi
         if [ "${{ env.INCLUDE_KENZOK8 }}" == "openwrt-packages" ]
