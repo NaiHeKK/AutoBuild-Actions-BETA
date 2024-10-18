@@ -186,7 +186,7 @@ jobs:
             if [ "${{ github.event.inputs.Testing_KERNEL }}" == true ]
             then
                 echo "Testing_KERNEL"
-                CONFIG_FILE=${CONFIG_FILE}_TETSKERNEL
+                CONFIG_FILE=${CONFIG_FILE}_TESTKERNEL
                 RELEASE_TAG_NAME=${RELEASE_TAG_NAME}_TESTKERNEL
             fi
         elif [[ "$DEFAULT_SOURCE" =~ "hanwckf" ]]
