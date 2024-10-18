@@ -180,8 +180,8 @@ jobs:
         if [[ "$DEFAULT_SOURCE" =~ "lede" ]]
         then
             echo "Tempoary_FLAG=LEDE" >> $GITHUB_ENV
-            CONFIG_FILE=${{ env.CONFIG_FILE }}_LEDE_2305
-            RELEASE_TAG_NAME=${RELEASE_TAG_NAME}_LEDE_2305
+            CONFIG_FILE=${{ env.CONFIG_FILE }}_LEDE
+            RELEASE_TAG_NAME=${RELEASE_TAG_NAME}_LEDE
             echo "LEDE"
         elif [[ "$DEFAULT_SOURCE" =~ "hanwckf" ]]
         then
