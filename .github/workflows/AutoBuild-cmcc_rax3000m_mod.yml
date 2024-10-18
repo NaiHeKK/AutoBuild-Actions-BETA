@@ -179,10 +179,16 @@ jobs:
         RELEASE_TAG_NAME=${{ env.RELEASE_TAG_NAME }}
         if [[ "$DEFAULT_SOURCE" =~ "lede" ]]
         then
+            echo "LEDE"
             echo "Tempoary_FLAG=LEDE" >> $GITHUB_ENV
             CONFIG_FILE=${{ env.CONFIG_FILE }}_LEDE
             RELEASE_TAG_NAME=${RELEASE_TAG_NAME}_LEDE
-            echo "LEDE"
+            if [ "${{ github.event.inputs.Testing_KERNEL }}" == true ]
+            then
+                echo "Testing_KERNEL"
+                CONFIG_FILE=${CONFIG_FILE}_TETSKERNEL
+                RELEASE_TAG_NAME=${RELEASE_TAG_NAME}_TESTKERNEL
+            fi
         elif [[ "$DEFAULT_SOURCE" =~ "hanwckf" ]]
         then
             echo "Tempoary_FLAG=hanwckf" >> $GITHUB_ENV
@@ -315,12 +321,6 @@ jobs:
         if [ "${{ env.CACHE_ACCELERATE }}" == true ]
         then
             echo -e "\nCONFIG_DEVEL=y\nCONFIG_CCACHE=y\n" >> $GITHUB_WORKSPACE/Configs/$CONFIG_FILE
-        fi
-        if [ "${{ github.event.inputs.Testing_KERNEL }}" == true ]
-        then
-            echo "Testing_KERNEL"
-            echo -e "\nCONFIG_TESTING_KERNEL=y\n" >> $GITHUB_WORKSPACE/Configs/$CONFIG_FILE
-            RELEASE_TAG_NAME=${RELEASE_TAG_NAME}_TESTKERNEL
         fi
         if [ "${{ github.event.inputs.INCLUDE_DOCKER }}" == true ]
         then
