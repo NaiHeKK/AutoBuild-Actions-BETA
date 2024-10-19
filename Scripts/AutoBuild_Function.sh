@@ -91,13 +91,12 @@ Firmware_Diy_Start() {
 		AutoBuild_Fw="AutoBuild-${OP_REPO}-${TARGET_PROFILE}-${OP_VERSION}-BOOT-${TARGET_FLAG}-SHA256.FORMAT"
 	;;
 	*)
-	  if [[ ${RELEASE_TAG_NAME} =~ TESTKERNEL ]]
-	  then
-		  AutoBuild_Fw="AutoBuild-${OP_REPO}-${TARGET_PROFILE}_TESTKERNEL-${OP_VERSION}-${TARGET_FLAG}-SHA256.FORMAT"
+		if [[ ${RELEASE_TAG_NAME} =~ TESTKERNEL ]]
+		then
+			AutoBuild_Fw="AutoBuild-${OP_REPO}-${TARGET_PROFILE}_TESTKERNEL-${OP_VERSION}-${TARGET_FLAG}-SHA256.FORMAT"
 		else
-		  AutoBuild_Fw="AutoBuild-${OP_REPO}-${TARGET_PROFILE}-${OP_VERSION}-${TARGET_FLAG}-SHA256.FORMAT"
+			AutoBuild_Fw="AutoBuild-${OP_REPO}-${TARGET_PROFILE}-${OP_VERSION}-${TARGET_FLAG}-SHA256.FORMAT"
 		fi
-		echo "AutoBuild_Fw: ${AutoBuild_Fw}"
 	;;
 	esac
 	cat >> ${GITHUB_ENV} <<EOF
