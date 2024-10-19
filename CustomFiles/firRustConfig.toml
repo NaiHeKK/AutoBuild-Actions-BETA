@@ -1,8 +1,0 @@
-[source.crates-io]
-replace-with = 'mirror'
-
-[source.mirror]
-registry = "sparse+https://mirrors.bfsu.edu.cn/crates.io-index/"
-
-[llvm]
-download-ci-llvm = false
