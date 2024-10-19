@@ -304,7 +304,9 @@ jobs:
 
     - name: Fix Rust
       run: |
-        mkdir ~/.cargo
+        cat ~/.cargo/config.toml
+        echo "----------------------------------"
+        rm -rf ~/.cargo/config.toml
         cp $GITHUB_WORKSPACE/CustomFiles/firRustConfig.toml ~/.cargo/config.toml
         cat ~/.cargo/config.toml
 
