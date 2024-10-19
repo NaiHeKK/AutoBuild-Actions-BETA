@@ -304,11 +304,9 @@ jobs:
 
     - name: Fix Rust
       run: |
-        cd openwrt
-        sed -i 's/--set=llvm.download-ci-llvm=true/--set=source.crates-io.replace-with=mirror \\\
-        --set=source.mirror.registry=sparse+https:\/\/mirrors.bfsu.edu.cn\/crates.io-index\/ \\\
-        --set=llvm.download-ci-llvm=false/' package/feeds/packages/rust/Makefile
-        cat package/feeds/packages/rust/Makefile
+        mkdir ~/.cargo
+        cp $GITHUB_WORKSPACE/CustomFiles/firRustConfig.toml ~/.cargo/config.toml
+        cat ~/.cargo/config.toml
 
     - name: Accelerate
       if: env.CACHE_ACCELERATE == 'true'
