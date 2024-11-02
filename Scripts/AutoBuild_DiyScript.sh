@@ -21,7 +21,7 @@ Firmware_Diy_Core() {
 	Default_Flag=AUTO
 	# 固件标签 (名称后缀), 适用不同配置文件, AUTO: [自动识别]
 	
-	Default_IP="192.168.1.1"
+	Default_IP="10.0.0.1"
 	# 固件 IP 地址
 	
 	Default_Title="Powered by AutoBuild-Actions"
@@ -73,7 +73,19 @@ Firmware_Diy() {
 	# ReleaseDL <release_url> <file> <target_path>
 	# Copy <cp_from> <cp_to > <rename>
 	# merge_package <git_branch> <git_repo_url> <package_path> <target_path>..
-	
+
+	# 通用插件
+	## luci-app-ddns-go
+	rm -rf ${FEEDS_LUCI}/luci-app-ddns-go
+	rm -rf ${FEEDS_PKG}/ddns-go
+	AddPackage ddns-go sirpdboy luci-app-ddns-go main
+	## luci-app-advancedplus
+	AddPackage other sirpdboy luci-app-advancedplus main
+	## luci-app-lucky
+	AddPackage other sirpdboy luci-app-lucky main
+	## OpenClash
+	AddPackage other vernesong OpenClash dev
+
 	case "${OP_AUTHOR}/${OP_REPO}:${OP_BRANCH}" in
 	coolsnowwolf/lede:master)
 		cat >> ${Version_File} <<EOF
@@ -96,25 +108,39 @@ EOF
 		# sed -i "s?/bin/login?/usr/libexec/login.sh?g" ${FEEDS_PKG}/ttyd/files/ttyd.config
 		# sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
 		# sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase="/luci-static/argon-mod"' $(PKG_Finder d package default-settings)/files/zzz-default-settings
-		sed -i "s?openwrt-23.05?master?g" ${FEEDS_CONF}
+		# sed -i "s?openwrt-23.05?master?g" ${FEEDS_CONF}
 
-		rm -r ${FEEDS_LUCI}/luci-theme-argon*
-		AddPackage other vernesong OpenClash dev
+		rm -rf ${FEEDS_LUCI}/luci-theme-argon*
 		AddPackage other jerrykuku luci-app-argon-config master
 		AddPackage other fw876 helloworld main
-		AddPackage other sbwml luci-app-mosdns v5-lua
+
+		# For 23.05
+		AddPackage themes sirpdboy luci-theme-kucat js
+		AddPackage other sbwml luci-app-mosdns v5
+		AddPackage other morytyann OpenWrt-mihomo main
+		# frps frpc
+		# For Use RemoveDirWithoutRex or find
+		# AddPackage other kenzok8 jell main frp$\|.*-frp.*
+		# For Use rm !()
+		# AddPackage other kenzok8 jell main frp\|*-frp*
+		# rm -rf ${FEEDS_LUCI}/luci-app-frpc
+		# rm -rf ${FEEDS_LUCI}/luci-app-frps
+		# rm -rf ${FEEDS_PKG}/frp
+
+		# For 18.06
+		# AddPackage themes sirpdboy luci-theme-kucat main
+		# AddPackage other sbwml luci-app-mosdns v5-lua
+
 		AddPackage themes jerrykuku luci-theme-argon 18.06
 		AddPackage themes thinktip luci-theme-neobird main
 		AddPackage msd_lite ximiTech luci-app-msd_lite main
 		AddPackage msd_lite ximiTech msd_lite main
 		AddPackage iptvhelper riverscn openwrt-iptvhelper master
-		rm -r ${WORK}/package/other/helloworld/mosdns
-		rm -r ${FEEDS_PKG}/mosdns
-		rm -r ${FEEDS_LUCI}/luci-app-mosdns
-		rm -r ${FEEDS_PKG}/curl
-		rm -r ${FEEDS_PKG}/msd_lite
-		Copy ${CustomFiles}/curl ${FEEDS_PKG}
-		
+		rm -rf ${WORK}/package/other/helloworld/mosdns
+		rm -rf ${FEEDS_PKG}/mosdns
+		rm -rf ${FEEDS_LUCI}/luci-app-mosdns
+		rm -rf ${FEEDS_PKG}/msd_lite
+
 		case "${TARGET_BOARD}" in
 		ramips)
 			sed -i "/DEVICE_COMPAT_VERSION := 1.1/d" target/linux/ramips/image/mt7621.mk
@@ -127,7 +153,7 @@ EOF
 			ClashDL mipsle-hardfloat tun
 		;;
 		esac
-			
+
 		case "${TARGET_PROFILE}" in
 		d-team_newifi-d2)
 			Copy ${CustomFiles}/${TARGET_PROFILE}_system ${BASE_FILES}/etc/config system
@@ -151,9 +177,26 @@ EOF
 			AddPackage passwall-depends xiaorouji openwrt-passwall-packages main
 			AddPackage passwall-luci xiaorouji openwrt-passwall main
 		;;
+		cmcc_rax3000m*)
+			AddPackage passwall xiaorouji openwrt-passwall-packages main
+			AddPackage passwall xiaorouji openwrt-passwall main
+			AddPackage passwall xiaorouji openwrt-passwall2 main
+			rm -r ${WORK}/package/other/helloworld/xray-core
+			rm -r ${WORK}/package/other/helloworld/xray-plugin
+		;;
 		esac
 	;;
 	immortalwrt/immortalwrt*)
+		AddPackage other morytyann OpenWrt-mihomo main
+		AddPackage themes sirpdboy luci-theme-kucat js
+		# frps frpc
+		# For Use RemoveDirWithoutRex or find
+		# AddPackage other kenzok8 jell main frp$\|.*-frp.*
+		# For Use rm !()
+		AddPackage other kenzok8 jell main frp\|*-frp*
+		rm -rf ${FEEDS_LUCI}/luci-app-frpc
+		rm -rf ${FEEDS_LUCI}/luci-app-frps
+		rm -rf ${FEEDS_PKG}/frp
 		case "${TARGET_PROFILE}" in
 		x86_64)
 			sed -i -- 's:/bin/ash:'/bin/bash':g' ${BASE_FILES}/etc/passwd
@@ -176,16 +219,19 @@ EOF
 		esac
 	;;
 	padavanonly/immortalwrtARM*)
+		AddPackage themes sirpdboy luci-theme-kucat main
 		case "${TARGET_PROFILE}" in
 		xiaomi_redmi-router-ax6s)
 			:
 		;;
 		esac
 	;;
-	hanwckf/immortalwrt-mt798x*)
+	hanwckf/immortalwrt-mt798x* | padavanonly/immortalwrt-mt798x*)
+		AddPackage themes sirpdboy luci-theme-kucat main
 		case "${TARGET_PROFILE}" in
 		cmcc_rax3000m | jcg_q30)
 			AddPackage passwall xiaorouji openwrt-passwall main
+			AddPackage passwall xiaorouji openwrt-passwall2 main
 			rm -r ${FEEDS_LUCI}/luci-app-passwall
 			patch < ${CustomFiles}/mt7981/0001-Add-iptables-socket.patch -p1 -d ${WORK}
 			rm -r ${WORK}/package/network/services/dnsmasq

@@ -88,7 +88,12 @@ Firmware_Diy_Start() {
 	fi
 	case "${TARGET_BOARD}" in
 	*)
-		AutoBuild_Fw="AutoBuild-${OP_REPO}-${TARGET_PROFILE}-${OP_VERSION}-${TARGET_FLAG}-SHA256.FORMAT"
+		if [[ ${RELEASE_TAG_NAME} =~ TESTKERNEL ]]
+		then
+			AutoBuild_Fw="AutoBuild-${OP_REPO}-${TARGET_PROFILE}_TESTKERNEL-${OP_VERSION}-${TARGET_FLAG}-SHA256.FORMAT"
+		else
+			AutoBuild_Fw="AutoBuild-${OP_REPO}-${TARGET_PROFILE}-${OP_VERSION}-${TARGET_FLAG}-SHA256.FORMAT"
+		fi
 	;;
 	esac
 	cat >> ${GITHUB_ENV} <<EOF
@@ -495,6 +500,30 @@ AddPackage() {
 	fi
 	ECHO "Downloading package [${PKG_NAME}] to ${PKG_DIR} ..."
 	git clone --depth 1 -b ${REPO_BRANCH} ${REPO_URL} ${PKG_DIR}/${PKG_NAME}/ > /dev/null 2>&1
+	if [ "$5" ]
+	then
+		NOT_DEL=$5
+		echo "NOT_DEL:${NOT_DEL}"
+		RemoveDirWithoutRex ${PKG_DIR}/${PKG_NAME} ${NOT_DEL}
+		# find ${PKG_DIR}/${PKG_NAME}/* -type d -maxdepth 0 ! -regex ".*$(echo "$NOT_DEL" | sed 's/|/\\|/g')" -exec rm -rf {} +
+		# need [shopt -s extglob] in workflows.yml
+		# rm -rf ${PKG_DIR:?}/${PKG_NAME:?}/!(${NOT_DEL:?})
+	fi
+	ls ${PKG_DIR}/${PKG_NAME}/
+}
+
+RemoveDirWithoutRex() {
+	TARGET_DIR=$1
+	REGEX="$2"
+	for dir in "$TARGET_DIR"/*
+	do
+		dir_name=$(basename "$dir")
+		if [[ ! "$dir_name" =~ $REGEX ]]
+		then
+			rm -rf "$dir"
+			echo "Deleted folder: $dir_name"
+		fi
+	done
 }
 
 Copy() {
