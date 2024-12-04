@@ -216,6 +216,7 @@ EOF
 			x86_64-Next)
 				# sed -i "s?/bin/login?/usr/libexec/login.sh?g" ${FEEDS_PKG}/ttyd/files/ttyd.config
 				AddPackage passwall xiaorouji openwrt-passwall main
+				AddPackage passwall xiaorouji openwrt-passwall2 main
 				rm -r ${FEEDS_LUCI}/luci-app-passwall
 				AddPackage other sbwml luci-app-mosdns v5
 				mosdns_version="5.3.3"
@@ -231,6 +232,8 @@ EOF
 				
 				Copy ${CustomFiles}/socat.Makefile ${FEEDS_PKG}/socat Makefile
 				rm -r ${FEEDS_PKG}/socat/files
+				Copy ${CustomFiles}/speedtest ${BASE_FILES}/usr/bin
+				chmod +x ${BASE_FILES}/usr/bin/speedtest
 			;;
 			esac
 		;;
