@@ -113,7 +113,6 @@ EOF
 
 		rm -r ${FEEDS_LUCI}/luci-theme-argon*
 		AddPackage other jerrykuku luci-app-argon-config master
-		AddPackage other fw876 helloworld main
 
 		# For 23.05
 		AddPackage themes sirpdboy luci-theme-kucat js
@@ -137,7 +136,6 @@ EOF
 		AddPackage msd_lite ximiTech luci-app-msd_lite main
 		AddPackage msd_lite ximiTech msd_lite main
 		AddPackage iptvhelper riverscn openwrt-iptvhelper master
-		rm -rf ${WORK}/package/other/helloworld/mosdns
 		rm -rf ${FEEDS_PKG}/mosdns
 		rm -rf ${FEEDS_LUCI}/luci-app-mosdns
 		rm -rf ${FEEDS_PKG}/msd_lite
@@ -193,8 +191,6 @@ EOF
 			AddPackage passwall xiaorouji openwrt-passwall-packages main
 			AddPackage passwall xiaorouji openwrt-passwall main
 			AddPackage passwall xiaorouji openwrt-passwall2 main
-			rm -r ${WORK}/package/other/helloworld/xray-core
-			rm -r ${WORK}/package/other/helloworld/xray-plugin
 		;;
 		esac
 	;;
