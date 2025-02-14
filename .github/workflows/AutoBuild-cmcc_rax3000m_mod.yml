@@ -21,6 +21,10 @@ on:
         options:
           - '128M'
           - '256M'
+      CACHE_ACCELERATE:
+        description: 'Cache 加速编译'
+        type: boolean
+        default: true
       Tempoary_SOURCE:
         description: '源码仓库 [可选]'
         default: 'coolsnowwolf/lede:master'
@@ -228,6 +232,7 @@ jobs:
         echo "REPO_BRANCH=$REPO_BRANCH" >> $GITHUB_ENV
         echo "Compile_Date=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
         echo "Display_Date=$(date +%Y/%m/%d)" >> $GITHUB_ENV
+        echo "CACHE_ACCELERATE=${{ github.event.inputs.CACHE_ACCELERATE }}" >> $GITHUB_ENV
 
     - name: Initialize Environment
       env:
