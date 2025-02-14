@@ -24,7 +24,7 @@ on:
       CACHE_ACCELERATE:
         description: 'Cache 加速编译'
         type: boolean
-        default: true
+        default: false
       Tempoary_SOURCE:
         description: '源码仓库 [可选]'
         default: 'coolsnowwolf/lede:master'
