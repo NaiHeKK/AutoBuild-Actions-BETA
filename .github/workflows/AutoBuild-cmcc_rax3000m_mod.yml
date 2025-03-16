@@ -337,7 +337,6 @@ jobs:
         rm -f .config && cp $GITHUB_WORKSPACE/Configs/$CONFIG_FILE .config
         Firmware_Diy_Main
         Firmware_Diy
-        Firmware_Diy_Other
 
     - name: Pre-download Libraries
       run: |
