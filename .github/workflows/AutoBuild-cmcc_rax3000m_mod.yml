@@ -9,6 +9,7 @@ name: CMCC RAX3000M MOD
 ### 界面控制部分 ( 以下内容请保持不变 )
 on:
   repository_dispatch:
+    types: ['LEDE Update']
   workflow_dispatch:
     inputs:
       Tempoary_IP:
