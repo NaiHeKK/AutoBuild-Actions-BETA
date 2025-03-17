@@ -76,8 +76,6 @@ Firmware_Diy() {
 
 	# 通用插件
 	## luci-app-ddns-go
-	rm -rf ${FEEDS_LUCI}/luci-app-ddns-go
-	rm -rf ${FEEDS_PKG}/ddns-go
 	AddPackage ddns-go sirpdboy luci-app-ddns-go main
 	## luci-app-advancedplus
 	AddPackage other sirpdboy luci-app-advancedplus main
