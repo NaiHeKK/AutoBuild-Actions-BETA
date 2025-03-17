@@ -85,6 +85,8 @@ Firmware_Diy() {
 	AddPackage other sirpdboy luci-app-lucky main
 	## OpenClash
 	AddPackage other vernesong OpenClash dev
+	## nikki
+	AddPackage OpenWrt-nikki nikkinikki-org OpenWrt-nikki main
 
 	case "${OP_AUTHOR}/${OP_REPO}:${OP_BRANCH}" in
 	coolsnowwolf/lede:master)
