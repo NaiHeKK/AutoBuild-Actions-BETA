@@ -483,6 +483,18 @@ MKDIR() {
   done
 }
 
+DeleteFind() {
+  parent_dir=$1
+  delete_dir=$2
+  mapfile -d $'\0' found_dirs < <(find "$parent_dir" \( -type d -o -type l \) -name "$delete_dir" -print0 2>/dev/null)
+  if [ ${#found_dirs[@]} -gt 0 ]; then
+    for path in "${found_dirs[@]}"; do
+      ECHO "Deleting Directory: $path"
+      rm -rf -- "$path"  # -- –hŽ~˜HŒaˆÈ - ??”í?”»???
+    done
+  fi
+}
+
 AddPackage() {
   if [[ $# -lt 4 ]]
   then
@@ -521,12 +533,8 @@ AddPackage() {
   for dir in "${PKG_DIR}"/"${PKG_NAME}"/*
   do
     dir_name=$(basename "$dir")
-    delPath=${FEEDS_LUCI}/${dir_name}
-    echo "DEL_PATH:${delPath}"
-    rm -rf ${delPath}
-    delPath=${FEEDS_PKG}/${dir_name}
-    echo "DEL_PATH:${delPath}"
-    rm -rf ${delPath}
+    DeleteFind "$FEEDS_LUCI" "$dir_name"
+    DeleteFind "$FEEDS_PKG" "$dir_name"
   done
 }
 
