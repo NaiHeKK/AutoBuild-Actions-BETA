@@ -19,7 +19,7 @@ env:
 on:
   workflow_dispatch:
   schedule:
-#    - cron: 0 5,18 * * *
+    - cron: 0 5,18 * * *
 
 jobs:
   check:
@@ -47,10 +47,10 @@ jobs:
 
     - name: Trigger build
       if: steps.cacheHash.outputs.cache-hit != 'true'
-      uses: peter-evans/repository-dispatch@v2
+      uses: benc-uk/workflow-dispatch@v1
       with:
-        token: ${{ github.token }}
-        event-type: LEDE Update
+        workflow: CMCC RAX3000M MOD
+        inputs: '{ "Tempoary_MEMORY": "256M", "Tempoary_SOURCE": "coolsnowwolf/lede:master", "Testing_KERNEL": true }'
 
     - name: Delete workflow runs
       uses: Mattraks/delete-workflow-runs@v2
