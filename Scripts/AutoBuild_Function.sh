@@ -521,8 +521,12 @@ AddPackage() {
   for dir in "${PKG_DIR}"/"${PKG_NAME}"/*
   do
     dir_name=$(basename "$dir")
-    rm -rf ${FEEDS_LUCI}/${dir_name}
-    rm -rf ${FEEDS_PKG}/${dir_name}
+    delPath=${FEEDS_LUCI}/${dir_name}
+    echo "DEL_PATH:${delPath}"
+    rm -rf ${delPath}
+    delPath=${FEEDS_PKG}/${dir_name}
+    echo "DEL_PATH:${delPath}"
+    rm -rf ${delPath}
   done
 }
 
