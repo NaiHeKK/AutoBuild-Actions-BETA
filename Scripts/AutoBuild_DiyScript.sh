@@ -119,7 +119,6 @@ EOF
 		# For 23.05
 		AddPackage themes sirpdboy luci-theme-kucat js
 		AddPackage other sbwml luci-app-mosdns v5
-		AddPackage other morytyann OpenWrt-mihomo main
 		# frps frpc
 		# For Use RemoveDirWithoutRex or find
 		# AddPackage other kenzok8 jell main frp$\|.*-frp.*
