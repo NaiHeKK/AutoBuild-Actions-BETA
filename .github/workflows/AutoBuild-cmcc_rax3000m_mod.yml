@@ -249,8 +249,15 @@ jobs:
 
     - name: Clone Openwrt Source Code
       run: |
+        echo "PWD: $PWD"
+        echo "before git"
+        ls -la
         git clone -b $REPO_BRANCH $REPO_URL openwrt
+        echo "before link"
+        ls -la
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
+        echo "after link"
+        ls -la
         cd openwrt
         if [ "${{ env.INCLUDE_KENZOK8 }}" == "openwrt-packages" ]
         then
