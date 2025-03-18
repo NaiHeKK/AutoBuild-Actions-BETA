@@ -249,6 +249,7 @@ jobs:
       run: |
         git clone -b $REPO_BRANCH $REPO_URL openwrt
         cd openwrt
+        git submodule update --init --recursive  
         if [ "${{ env.INCLUDE_KENZOK8 }}" == "openwrt-packages" ]
         then
             echo "INCLUDE_KENZOK8 openwrt-packages"
