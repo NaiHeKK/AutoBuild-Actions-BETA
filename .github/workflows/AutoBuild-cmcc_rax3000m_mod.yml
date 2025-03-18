@@ -385,7 +385,7 @@ jobs:
 
     - name: Organize files
       id: organize
-      if: env.Compile_Result == 'true' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
+      if: env.Compile_Result == 'true' && !cancelled()
       run: |
         cd openwrt/bin/targets/*/*
         rm -rf packages
@@ -400,14 +400,13 @@ jobs:
         path: ${{ env.FIRMWARE }}
 
     - name: Upload Firmware to Release
-      uses: svenstaro/upload-release-action@v2
+      uses: softprops/action-gh-release@master
       if: env.UPLOAD_RELEASES == 'true' && env.Compile_Result == 'true' && !cancelled()
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        tag_name: ${{ env.RELEASE_TAG_NAME }}_${{ env.FILE_DATE }}
         files: ${{ env.FIRMWARE }}/*
-        file_glob: true
-        tag: ${{ env.RELEASE_TAG_NAME }}_${{ env.FILE_DATE }}
-        overwrite: true
 
     - name: Delete workflow runs
       uses: Mattraks/delete-workflow-runs@main
