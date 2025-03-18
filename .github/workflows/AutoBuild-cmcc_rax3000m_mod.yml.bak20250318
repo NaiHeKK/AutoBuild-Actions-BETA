@@ -350,76 +350,68 @@ jobs:
         cd openwrt
         make -j4 || make -j1 V=s
         [ "$?" == 0 ] && echo "Compile_Result=true" >> $GITHUB_ENV || echo "Compile_Result=false" >> $GITHUB_ENV
-        grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
-        [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
-        echo "FILE_DATE=$(date +%Y%m%d%H%M%S)" >> $GITHUB_ENV
 
-    - name: Rename Firmware Bin
-      if: env.Compile_Result == 'true' && (!cancelled())
+    - name: Checkout Firmware
+      if: env.Compile_Result == 'true' && !cancelled()
       run: |
-        cd openwrt/bin/targets/*/*
-        mapfile -d $'\0' found_files < <(find "$PWD" -type f -name "*.bin" -print0 2>/dev/null)
-        if [ ${#found_files[@]} -gt 0 ]; then
-          for file in "${found_files[@]}"; do
-            filename=$(basename "$file")
-            filename_without_ext="${filename%.*}"
-            extension="${filename##*.}"
-            new_filename="${filename_without_ext}_${{ env.FILE_DATE }}.${extension}"
-            if [ "${{ github.event.inputs.Testing_KERNEL }}" == true ]
-            then
-                new_filename="${filename_without_ext}_TESTKERNEL_${{ env.FILE_DATE }}.${extension}"
-            fi
-            file_dir=$(dirname "$file")
-            new_filepath="${file_dir}/${new_filename}"
-            mv "$file" "$new_filepath"
-            echo "Renamed $file to $new_filepath "
-          done
-        fi
-
-    - name: Upload bin directory
-      uses: actions/upload-artifact@main
-      if: env.Compile_Result == 'true' && env.UPLOAD_BIN_DIR == 'true'
-      with:
-        name: OpenWrt_bin${{ env.DEVICE_NAME }}_${{ env.FILE_DATE }}
-        path: openwrt/bin
-
-    - name: Organize files
-      id: organize
-      if: env.Compile_Result == 'true' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
-      run: |
-        cd openwrt/bin/targets/*/*
-        rm -rf packages
-        echo "FIRMWARE=$PWD" >> $GITHUB_ENV
-        echo "status=success" >> $GITHUB_OUTPUT
+        cd openwrt
+        source $GITHUB_WORKSPACE/Scripts/AutoBuild_Function.sh
+        Firmware_Diy_End
 
     - name: Upload Firmware to Artifacts
       uses: actions/upload-artifact@main
       if: env.UPLOAD_ARTIFACTS == 'true' && env.Compile_Result == 'true' && !cancelled()
       with:
-        name: OpenWrt_firmware${{ env.DEVICE_NAME }}_${{ env.FILE_DATE }}
-        path: ${{ env.FIRMWARE }}
+        name: ${{ env.CONFIG_FILE }}_firmware_${{ env.Compile_Date }}
+        path: openwrt/bin/Firmware
+
+    - name: Upload bin to Artifacts
+      uses: actions/upload-artifact@main
+      if: env.UPLOAD_BIN_ARTIFACTS == 'true' && env.Compile_Result == 'true' && !cancelled()
+      with:
+        name: ${{ env.CONFIG_FILE }}_bin_${{ env.Compile_Date }}
+        path: openwrt/bin
 
     - name: Upload Firmware to Release
       uses: svenstaro/upload-release-action@v2
       if: env.UPLOAD_RELEASES == 'true' && env.Compile_Result == 'true' && !cancelled()
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        files: ${{ env.FIRMWARE }}/*
+        file: openwrt/bin/Firmware/*
         file_glob: true
-        tag: ${{ env.RELEASE_TAG_NAME }}_${{ env.FILE_DATE }}
+        tag: ${{ env.RELEASE_TAG_NAME }}_${{ env.Compile_Date }}
         overwrite: true
 
-    - name: Delete workflow runs
-      uses: Mattraks/delete-workflow-runs@main
+    - name: Upload Firmware to Release AutoUpdate
+      uses: svenstaro/upload-release-action@v2
+      if: env.UPLOAD_RELEASES == 'true' && env.Compile_Result == 'true' && !cancelled()
       with:
-        retain_days: 3
-        keep_minimum_runs: 10
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: openwrt/bin/Firmware/*
+        file_glob: true
+        tag: AutoUpdate
+        overwrite: true
 
-    - name: Remove old Releases
-      uses: dev-drprasad/delete-older-releases@master
-      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+    - name: Download Github API
+      if: env.UPLOAD_RELEASES == 'true' && env.Compile_Result == 'true' && !cancelled()
+      run: |
+        wget https://api.github.com/repos/${{github.repository}}/releases/tags/AutoUpdate -O API
+
+    - name: Upload Github API to Release
+      if: env.UPLOAD_RELEASES == 'true' && env.Compile_Result == 'true' && !cancelled()
+      uses: svenstaro/upload-release-action@v2
       with:
-        keep_latest: 10
-        delete_tags: true
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: ./API
+        file_glob: true
+        tag: AutoUpdate
+        overwrite: true
+
+    - name: Delete old Workflow Runs
+      uses: Mattraks/delete-workflow-runs@v2
+      if: env.DELETE_OLD_WORKFLOW == 'true' && !cancelled()
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        repository: ${{ github.repository }}
+        retain_days: 3
+        keep_minimum_runs: 4
