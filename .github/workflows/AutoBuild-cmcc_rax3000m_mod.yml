@@ -239,8 +239,6 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-        sudo mkdir -p /workdir
-        sudo chown $USER:$GROUPS /workdir
         sudo -E apt-get update
         sudo -E apt-get -y full-upgrade
         sudo -E apt-get -y autoremove --purge
@@ -254,9 +252,6 @@ jobs:
         ls -la
         git clone -b $REPO_BRANCH $REPO_URL openwrt
         echo "before link"
-        ls -la
-        ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
-        echo "after link"
         ls -la
         cd openwrt
         if [ "${{ env.INCLUDE_KENZOK8 }}" == "openwrt-packages" ]
