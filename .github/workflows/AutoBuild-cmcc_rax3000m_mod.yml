@@ -245,10 +245,10 @@ jobs:
         sudo -E apt-get clean
         sudo timedatectl set-timezone "Asia/Shanghai"
 
-    - name: Install Rust nightly
-      run: |
-        rustup install nightly
-        rustup default nightly
+    - name: Install Rust toolchain
+      uses: actions-rs/toolchain@v1
+      with:
+          toolchain: nightly
 
     - name: Clone Openwrt Source Code
       run: |
