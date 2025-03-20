@@ -245,6 +245,11 @@ jobs:
         sudo -E apt-get clean
         sudo timedatectl set-timezone "Asia/Shanghai"
 
+    - name: Install Rust Nightly
+      run: |
+        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain nightly
+        echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+
     - name: Clone Openwrt Source Code
       run: |
         git clone -b $REPO_BRANCH $REPO_URL openwrt
@@ -346,6 +351,8 @@ jobs:
         make download -j8
 
     - name: Build OpenWrt
+      env:
+        CARGO: cargo +nightly
       run: |
         cd openwrt
         make -j4 || make -j1 V=s
