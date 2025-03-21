@@ -7,6 +7,7 @@ function Patch_File() {
   parent_path=$1
   patch_file_path=$2
   base_path=$PWD
+  ECHO $PWD
   cp -r "../Patch-Files/$patch_file_path" "$parent_path"
   ls -R "$parent_path"
   cd "$parent_path"
@@ -19,8 +20,10 @@ function Patch_File() {
     fi
   done
   cd "$base_path"
+  ECHO $PWD
 }
 
 cat feeds/packages/lang/rust/Makefile
 Patch_File feeds/packages feeds-package-patch-files
+ECHO $PWD
 cat feeds/packages/lang/rust/Makefile
