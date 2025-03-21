@@ -9,8 +9,8 @@ function Patch_File() {
   base_path=$PWD
   ECHO $PWD
   cp -r "../Patch-Files/$patch_file_path" "$parent_path"
-  ls -R "$parent_path"
   cd "$parent_path"
+  ls "$patch_file_path"
   for packagepatch in "$patch_file_path"/*; do
     if [ -f "$packagepatch" ]; then
       patch_file=$(basename "$packagepatch")
