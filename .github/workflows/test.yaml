@@ -44,7 +44,7 @@ jobs:
 
     - name: Patch File
       run: |
-        chmod +x patch-file.sh
+        chmod +x Scripts/patch-file.sh
         cd openwrt
         $GITHUB_WORKSPACE/Scripts/patch-file.sh
 
