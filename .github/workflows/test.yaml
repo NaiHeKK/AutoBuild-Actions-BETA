@@ -46,7 +46,7 @@ jobs:
       run: |
         chmod +x patch-file.sh
         cd openwrt
-        $GITHUB_WORKSPACE/patch-file.sh
+        $GITHUB_WORKSPACE/Scripts/patch-file.sh
 
     - name: Delete workflow runs
       uses: Mattraks/delete-workflow-runs@main
