@@ -12,6 +12,7 @@ function Patch_File() {
   cd "$parent_path"
   ls "$patch_file_path"
   for packagepatch in "$patch_file_path"/*; do
+    ECHO "$packagepatch"
     if [ -f "$packagepatch" ]; then
       patch_file=$(basename "$packagepatch")
       ECHO Applying Patch File "$patch_file"
