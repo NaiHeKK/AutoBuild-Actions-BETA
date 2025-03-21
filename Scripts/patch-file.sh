@@ -1,6 +1,6 @@
 #!/bin/bash
 ECHO() {
-	echo "[$(date "+%H:%M:%S")] $*"
+  echo "[$(date "+%H:%M:%S")] $*"
 }
 
 function Patch_File() {
@@ -17,9 +17,6 @@ function Patch_File() {
     fi
   done
   cd "$base_path"
-  ECHO $PWD
 }
 
-cat feeds/packages/lang/rust/Makefile
 Patch_File feeds/packages feeds-package-patch-files
-cat feeds/packages/lang/rust/Makefile
