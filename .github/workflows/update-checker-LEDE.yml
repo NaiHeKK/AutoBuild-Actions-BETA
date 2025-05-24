@@ -50,7 +50,7 @@ jobs:
       uses: benc-uk/workflow-dispatch@v1
       with:
         workflow: CMCC RAX3000M MOD
-        inputs: '{ "Tempoary_MEMORY": "256M", "Tempoary_SOURCE": "coolsnowwolf/lede:master", "INCLUDE_KENZOK8": "small-package" }'
+        inputs: '{ "Tempoary_MEMORY": "256M", "Tempoary_SOURCE": "coolsnowwolf/lede:master", "INCLUDE_KENZOK8": "openwrt-packages" }'
 
     - name: Delete workflow runs
       uses: Mattraks/delete-workflow-runs@v2
