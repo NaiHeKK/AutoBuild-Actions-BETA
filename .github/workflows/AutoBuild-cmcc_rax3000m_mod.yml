@@ -37,7 +37,7 @@ on:
           - 'immortalwrt/immortalwrt:master'
       Testing_KERNEL:
         description: '启用测试版内核？'
-        default: true
+        default: false
         type: boolean
       INCLUDE_DOCKER:
         description: '添加Docker？'
