@@ -130,14 +130,14 @@ EOF
 		# AddPackage themes sirpdboy luci-theme-kucat main
 		# AddPackage other sbwml luci-app-mosdns v5-lua
 
-		AddPackage themes jerrykuku luci-theme-argon 18.06
-		AddPackage themes thinktip luci-theme-neobird main
-		AddPackage msd_lite ximiTech luci-app-msd_lite main
-		AddPackage msd_lite ximiTech msd_lite main
-		AddPackage iptvhelper riverscn openwrt-iptvhelper master
+		# AddPackage themes jerrykuku luci-theme-argon 18.06
+		# AddPackage themes thinktip luci-theme-neobird main
+		# AddPackage msd_lite ximiTech luci-app-msd_lite main
+		# AddPackage msd_lite ximiTech msd_lite main
+		# AddPackage iptvhelper riverscn openwrt-iptvhelper master
 		rm -rf ${FEEDS_PKG}/mosdns
 		rm -rf ${FEEDS_LUCI}/luci-app-mosdns
-		rm -rf ${FEEDS_PKG}/msd_lite
+		# rm -rf ${FEEDS_PKG}/msd_lite
 
 		case "${TARGET_BOARD}" in
 		ramips)
