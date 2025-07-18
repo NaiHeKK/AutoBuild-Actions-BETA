@@ -86,7 +86,7 @@ Firmware_Diy() {
 	## nikki
 	AddPackage OpenWrt-nikki nikkinikki-org OpenWrt-nikki main
 	## openlist
-	AddPackage other sbwml luci-app-openlist main
+	AddPackage other sbwml luci-app-openlist2 main
 
 	case "${OP_AUTHOR}/${OP_REPO}:${OP_BRANCH}" in
 	coolsnowwolf/lede:master)
